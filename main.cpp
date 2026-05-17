@@ -22,9 +22,9 @@ int main(int argc, char** argv)
 
     // Load and play background music
     sf::Music bgMusic;
-    if (!bgMusic.openFromFile("Assets/Sounds/Plants vs Zombies Theme.ogg"))
+    if (!bgMusic.openFromFile("Assets/Sounds/OOP music assets/06. Main Music 00.mp3"))
     {
-        cout << "Error loading background music Assets/Sounds/Plants vs Zombies Theme.ogg!" << endl;
+        cout << "Error loading background music Assets/Sounds/OOP music assets/06. Main Music 00.mp3!" << endl;
     }
     else
     {

@@ -8,7 +8,7 @@ frozenPeaBullet::frozenPeaBullet()
 	this->count++;
 	this->isAlive = true;
 	this->position = { 0, 0 };
-	this->dx = 2;
+	this->dx = 8;
 	this->dy = 0;
 	this->texture.loadFromFile("Assets\\Bullets\\PeaIce\\icepea.png");
 	this->sprite.setTexture(texture);

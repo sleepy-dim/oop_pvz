@@ -17,7 +17,7 @@ void SunFlower::action(float deltaTime , MovingObjectArr* movingObjectArr )
 SunFlower::SunFlower()
 {
 	name = "SunFlower";
-	health = 10;
+	health = 500;
 	isAlive = true;
 	sunTimer = 0;
 	sunInterval = 24 ;

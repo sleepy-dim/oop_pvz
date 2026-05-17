@@ -5,7 +5,7 @@
 Repeater::Repeater()
 {
 	cost = 150;
-	health = 10;
+	health = 500;
 	damage = 10;
 
 	bulletInterval = 4;
