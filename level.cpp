@@ -57,7 +57,7 @@ void Level::drawPause(RenderWindow& window)
     // Draw semi-transparent dark overlay if paused or game ended
     if (isPaused || hasLost || hasWon)
     {
-        RectangleShape darkOverlay(Vector2f(1200, 800));
+        RectangleShape darkOverlay(Vector2f(1200, 600));
         darkOverlay.setFillColor(Color(0, 0, 0, 150));
         window.draw(darkOverlay);
     }

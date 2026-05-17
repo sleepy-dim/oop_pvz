@@ -16,7 +16,7 @@ int main(int argc, char** argv)
     }
     cout << "Starting main..." << endl;
     // Create the main game window
-    RenderWindow window(VideoMode(1200, 800), "Plants vs Zombies", Style::Close);
+    RenderWindow window(VideoMode(1200, 600), "Plants vs Zombies", Style::Close);
     window.setFramerateLimit(60);
     cout << "Window created." << endl;
 
