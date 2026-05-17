@@ -1,0 +1,39 @@
+# Precompiled Objects
+*.o
+*.obj
+
+# Executables
+*.exe
+*.out
+*.app
+
+# IDEs and Editors
+.vs/
+.vscode/
+*.suo
+*.user
+*.userossc
+*.sln.docstates
+
+# Build Directories
+build/
+out/
+bin/
+x64/
+Debug/
+Release/
+ipch/
+*.db
+*.opendb
+
+# CMake files
+CMakeCache.txt
+CMakeFiles/
+CMakeSettings.json
+cmake_install.cmake
+Makefile
+targets
+
+# OS generated files
+.DS_Store
+Thumbs.db
