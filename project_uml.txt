@@ -1,7 +1,6 @@
 classDiagram
  
 class Point {
-  <<struct>>
   +x: float
   +y: float
   +Point()

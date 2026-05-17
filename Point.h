@@ -2,8 +2,9 @@
 #define POINT_H
 #include <cmath>
 
-struct Point
+class Point
 {
+public:
     float x;
     float y;
 
