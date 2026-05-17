@@ -8,11 +8,11 @@ Repeater::Repeater()
 	health = 500;
 	damage = 10;
 
-	bulletInterval = 4;
+	bulletInterval = 1.5f;
 	bulletTimer = 0;
 
-	bulletinterval_2 = 4;
-	bulletTimer_2 = 0.7;
+	bulletinterval_2 = 1.5f;
+	bulletTimer_2 = 0.25f;
 	
 }
 
@@ -41,7 +41,7 @@ void Repeater::shoot(float dt, MovingObjectArr* movingObjectArray)
 
 void Repeater::draw(RenderWindow & window)
 {
-	string path = "Assets\\Plants\\RepeaterPea\\RepeaterPea_" + to_string(((int) (bulletTimer * 15 / 4 ))) + ".png";
+	string path = "Assets\\Plants\\RepeaterPea\\RepeaterPea_" + to_string(((int) (bulletTimer * 15.0f / 1.5f ))) + ".png";
 	texture.loadFromFile(path);
 	sprite.setTexture(texture);
 	sprite.setPosition(position.x  , position.y);

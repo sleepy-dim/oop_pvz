@@ -4,7 +4,7 @@
 
 class Repeater : public ShootingPlant
 {
-	int bulletinterval_2;
+	float bulletinterval_2;
 	float bulletTimer_2;
 public : 
 	Repeater();

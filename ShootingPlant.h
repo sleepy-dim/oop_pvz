@@ -4,7 +4,7 @@ class ShootingPlant : public Plant
 {
 	protected :
 	float BulletSpeed;
-	int bulletInterval;
+	float bulletInterval;
 	float bulletTimer ;
 
 public:

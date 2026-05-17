@@ -9,7 +9,7 @@ frozenPea::frozenPea()
 	health = 1000;
 	damage = 10;
 
-	bulletInterval = 4;
+	bulletInterval = 1.5f;
 	bulletTimer = 0;
 	texture.loadFromFile("Assets\\Plants\\SnowPea\\SnowPea_0.png");
 	sprite.setTexture(texture);
@@ -33,7 +33,7 @@ frozenPea ::~frozenPea()
 
 void frozenPea::draw(sf::RenderWindow& window)
 {
-	string path = "Assets\\Plants\\SnowPea\\SnowPea_" + to_string((int)(bulletTimer *(15.0/4.0))) + ".png";
+	string path = "Assets\\Plants\\SnowPea\\SnowPea_" + to_string((int)(bulletTimer *(15.0/1.5))) + ".png";
 	texture.loadFromFile(path);
 	sprite.setTexture(texture);
 	sprite.setPosition(position.x , position.y);

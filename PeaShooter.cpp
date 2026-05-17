@@ -10,7 +10,7 @@ PeaShooter::PeaShooter()
 	health = 500;
 	damage = 10;
 
-	bulletInterval = 4;
+	bulletInterval = 1.5f;
 	bulletTimer = 0;
 	
 	
@@ -48,7 +48,7 @@ PeaShooter::~PeaShooter()
 
 void PeaShooter :: draw(RenderWindow& window) {
 
-	string path = "Assets\\Plants\\Peashooter\\Peashooter_" + to_string((int)(bulletTimer * (12.0 / 4.0))) + ".png";
+	string path = "Assets\\Plants\\Peashooter\\Peashooter_" + to_string((int)(bulletTimer * (12.0 / 1.5))) + ".png";
 	texture.loadFromFile(path);
 	sprite.setTexture(texture);
 	sprite.setPosition(position.x, position.y);
