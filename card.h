@@ -18,9 +18,10 @@ private:
 	Sprite sprite;
 	static Font font;
 	static bool assetsLoaded;
+	bool isUnlocked;
 
 public:
-	Card(string name, int cost, int coolDown, Point P);
+	Card(string name, int cost, int coolDown, Point P, bool isUnlocked = true);
 	void draw(RenderWindow& window, string slected);
 
 	int getCost();

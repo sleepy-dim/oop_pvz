@@ -1,6 +1,6 @@
 #pragma once
 #include "Zombie.h"
-#include "SimpleZombie.h"
+#include "simpleZom.h"
 #include "flyingZom.h"
 #include <iostream>
 #include <string>

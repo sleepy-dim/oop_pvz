@@ -1,0 +1,506 @@
+classDiagram
+ 
+class Point {
+  <<struct>>
+  +x: float
+  +y: float
+  +Point()
+  +Point(x: float, y: float)
+  +operator+(other: Point): Point
+  +operator-(other: Point): Point
+  +operator==(other: Point): bool
+  +operator+=(other: Point): Point
+  +distance(p1: Point, p2: Point): float  &#171;friend&#187;
+  +operator<<(os: ostream, p: Point): ostream  &#171;friend&#187;
+}
+ 
+class object {
+  #texture: Texture
+  #sprite: Sprite
+  #count: int$
+  #position: Point
+  #isAlive: bool
+  #frame: int
+  #maxFrame: int
+  #name: string
+  +object()
+  +isExist(): bool
+  +setAlive(isAlive: bool): void
+  +setPosition(p: Point): void
+  +getPosition(): Point
+  +setPosition(x: float, y: float): void
+  +getCount(): int$
+  +getName(): string
+  +getTexture(): Texture
+}
+ 
+class character {
+  #health: int
+  #damage: int
+  +getName(): string
+  +setName(name: string): void
+  +getHealth(): int
+  +setHealth(health: int): void
+  +getDamage(): int
+  +setDamage(damage: int): void
+  +isExist(): bool
+}
+ 
+class Plant {
+  #cost: int
+  +getCost(): int
+  +setCost(cost: int): void
+  +draw(window: RenderWindow): void
+  +action(deltaTime: float, arr: MovingObjectArr*): void
+  +~Plant()
+}
+ 
+class MovingObject {
+  #dx: float
+  #dy: float
+  #type: string
+  +update(f1: float, f2: float): void
+  +move(f: float): void
+  +draw(window: RenderWindow): void
+  +getType(): string
+  +setVelocity(dx: float, dy: float): void
+  +getdx(): float
+  +getdy(): float
+}
+ 
+class Zombie {
+  #dx: float
+  #dy: float
+  #isMoving: bool
+  #isFrozen: bool
+  #isFrozenTimer: float
+  #totalFrozenTime: float
+  #totalIntervals: float
+  #timer: float
+  #state: string
+  #isWithoutHead: bool
+  #headTimer: float
+  #isDying: bool
+  #isBurnt: bool
+  #burntTimer: float
+  +killCount: int$
+  +Zombie()
+  +~Zombie()
+  +getdx(): float
+  +getdy(): float
+  +setSpeed(dx: float, dy: float): void
+  +draw(window: RenderWindow): void
+  +action(x: float): void
+  +animate(s: string): void
+  +setState(s: string): void
+  +getState(): string
+  +setIsMoving(b: bool): void
+  +getIsMoving(): bool
+  +setIsFrozen(isFrozen: bool): bool
+  +isExist(): bool
+  +setBurnt(): void
+  +isCollidable(): bool
+}
+ 
+class ammo {
+  #damage: float
+  +ammo()
+  +getDamage(): float
+  +draw(window: RenderWindow): void
+  +move(f: float): void
+  +update(time: float, speed: float): void
+  +isExist(): bool
+}
+ 
+class Cactus {
+  +Cactus()
+  +~Cactus()
+  +action(deltaTime: float, arr: MovingObjectArr*): void
+  +draw(window: RenderWindow): void
+  +setPosition(x: float, y: float): void
+}
+ 
+class Card {
+  -position: Point
+  -name: string
+  -cost: int
+  -coolDown: int
+  -texture: Texture
+  -sprite: Sprite
+  -font: Font$
+  -assetsLoaded: bool$
+  -isUnlocked: bool
+  +Card(name: string, cost: int, coolDown: int, P: Point, isUnlocked: bool)
+  +draw(window: RenderWindow, selected: string): void
+  +getCost(): int
+  +getCoolDown(): int
+  +getName(): string
+}
+ 
+class cherry {
+  -exploded: bool
+  -radius: float
+  -time_to_explode: int
+  -timeExploding: float
+  -exploding: bool
+  -animationTextures: Texture[7]$
+  -texturesLoaded: bool$
+  +cherry()
+  +~cherry()
+  +draw(window: RenderWindow): void
+  +action(deltaTime: float, arr: MovingObjectArr*): void
+  +isExist(): bool
+}
+ 
+class explosion {
+  -explosionTimer: float
+  -explosionTime: int
+  -explosionRadius: float
+  +explosion(f: float)
+  +~explosion()
+  +update(f1: float, f2: float): void
+  +move(f: float): void
+  +draw(window: RenderWindow): void
+  +getExplosionRadius(): float
+}
+ 
+class flyingZom {
+  +flyingZom()
+  +~flyingZom()
+  +action(f: float): void
+  +move(): void
+  +draw(window: RenderWindow): void
+  +animate(s: string): void
+  +setPosition(x: float, y: float): void
+}
+ 
+class ShootingPlant {
+  #BulletSpeed: float
+  #bulletInterval: int
+  #bulletTimer: float
+  +action(deltaTime: float, arr: MovingObjectArr*): void
+  +shoot(deltaTime: float, arr: MovingObjectArr*): void
+  +~ShootingPlant()
+}
+ 
+class frozenPea {
+  +frozenPea()
+  +~frozenPea()
+  +shoot(deltaTime: float, arr: MovingObjectArr*): void
+  +draw(window: RenderWindow): void
+}
+ 
+class frozenPeaBullet {
+  +frozenPeaBullet()
+  +move(f: float): void
+}
+ 
+class Level {
+  #shop: Shop
+  #lawn: playground
+  #levelNumber: int
+  #last_screen: float
+  #backgroundTexture: Texture
+  #backgroundSprite: Sprite
+  #sunIntervals: int
+  #sunTimer: float
+  #lostTexture: Texture
+  #lostSprite: Sprite
+  #winTexture: Texture
+  #winSprite: Sprite
+  #pauseTexture: Texture
+  #pauseSprite: Sprite
+  #pauseScreenTexture: Texture
+  #pauseScreenSprite: Sprite
+  #livesRemaining: int
+  #livesTexture: Texture
+  #livesSprite: Sprite
+  #isPaused: bool
+  #hasLost: bool
+  #hasWon: bool
+  #isEnd: bool
+  #drawBackround(window: RenderWindow): void
+  +Level(levelNumber: int)
+  +loadLawnMowers(): void
+  +draw(window: RenderWindow): void
+  +update(f: float): void
+  +takeInput(window: RenderWindow): void
+  +zombieSpawn(): void
+  +addSuntoShop(): void
+  +generateSun(f: float): void
+  +drawPause(window: RenderWindow): void
+  +checkLoose(): void
+  +checkWin(): void
+  +getIsEnd(): bool
+  +getIsWon(): bool
+  +getIsLost(): bool
+}
+ 
+class garden {
+  +garden(level: int)
+  +draw(window: RenderWindow): void
+  +update(deltaTime: float): void
+  +zombieSpawn(): void
+  +input(windowzz: RenderWindow): void
+  +loadLawnMowers(): void
+}
+ 
+class LawnMower {
+  -isMoving: bool
+  -movingTexture: Texture
+  -movingSprite: Sprite
+  -animationTimer: float
+  +LawnMower()
+  +~LawnMower()
+  +update(f1: float, f2: float): void
+  +draw(window: RenderWindow): void
+  +move(f: float): void
+  +setIsMoving(b: bool): void
+  +getIsMoving(): bool
+}
+ 
+class MovingObjectArr {
+  -arr: MovingObject**
+  -capacity: int
+  -size: int
+  +MovingObjectArr()
+  +~MovingObjectArr()
+  +MovingObjectArr(other: MovingObjectArr)
+  +operator=(other: MovingObjectArr): MovingObjectArr
+  +push_back(obj: MovingObject*): void
+  +pop_back(): void
+  +getSize(): int
+  +empty(): bool
+  +clear(): void
+  +resize(): void
+  +at(index: int): MovingObject*
+  +insert(obj: MovingObject*, index: int): void
+  +erase(index: int): void
+}
+ 
+class Pea {
+  +Pea()
+  +move(f: float): void
+}
+ 
+class PeaShooter {
+  +PeaShooter()
+  +~PeaShooter()
+  +shoot(deltaTime: float, arr: MovingObjectArr*): void
+  +draw(window: RenderWindow): void
+}
+ 
+class PlantArr {
+  -arr: Plant**
+  -capacity: int
+  -size: int
+  +PlantArr()
+  +~PlantArr()
+  +push_back(obj: Plant*): void
+  +pop_back(): void
+  +getSize(): int
+  +empty(): bool
+  +clear(): void
+  +resize(): void
+  +at(index: int): Plant*
+  +insert(obj: Plant*, index: int): void
+  +erase(index: int): void
+}
+ 
+class plantGen {
+  -instance: plantGen*$
+  -plantGen()
+  +~plantGen()
+  +getInstance(): plantGen*$
+  +createPlant(plantName: string): Plant*
+}
+ 
+class playground {
+  -GRID_START_X: int
+  -GRID_START_Y: int
+  -BoxHeight: int
+  -BoxWidth: int
+  -available: bool[5][9]
+  -isLost: bool
+  +movingObjectsArray: MovingObjectArr
+  +zombieArray: ZombieArr
+  +zombieGen: zombieGen*
+  +plantsArray: PlantArr
+  +plantGen: plantGen*
+  +playground(i: int)
+  +~playground()
+  +getboxHeight(): int
+  +getboxWidth(): int
+  +getGRID_START_X(): int
+  +getGRID_START_Y(): int
+  +getGridPosition(x: float, y: float): Point
+  +getPlantsArray(): PlantArr&
+  +isBoxAvailable(x: int, y: int): bool
+  +setBoxAvailable(x: int, y: int, value: bool): void
+  +addPlant(x: float, y: float, type: string): void
+  +updatePlants(f: float, arr: MovingObjectArr*): void
+  +drawPlants(window: RenderWindow): void
+  +addZombie(x: float, y: float, type: string): void
+  +updateZombie(f: float): void
+  +drawZombie(window: RenderWindow): void
+  +drawMovingObjects(window: RenderWindow): void
+  +updateMovingObjects(f: float): void
+  +selectSun(x: float, y: float): void
+  +removeDead(): void
+  +removePlant(x: float, y: float): bool
+  +waterPlant(x: float, y: float): bool
+  +collisionAmmo_Zombie(): void
+  +collisionPlant_Zombie(): void
+  +checkWin(): bool
+  +checkLost(): bool
+}
+ 
+class Repeater {
+  -bulletinterval_2: int
+  -bulletTimer_2: float
+  +Repeater()
+  +shoot(f: float, arr: MovingObjectArr*): void
+  +draw(window: RenderWindow): void
+}
+ 
+class Shop {
+  -listOfCards: Card*[9]
+  -selectedPlant: Card*
+  -sun: int
+  -level: int
+  +Shop(level: int)
+  +draw(window: RenderWindow): void
+  +selectPlant(plantName: string): void
+  +selectPlant(f1: float, f2: float): void
+  +setSun(sun: int): void
+  +getSun(): int
+  +isPurchasable(): bool
+  +purchase(): void
+  +getSelectedPlant(): string
+  +incrementSun(i: int): void
+}
+ 
+class SimpleZombie {
+  -LostHeadPosition: Point
+  -headtexture: Texture
+  -headSprite: Sprite
+  +SimpleZombie()
+  +~SimpleZombie()
+  +action(f: float): void
+  +animate(s: string): void
+  +draw(window: RenderWindow): void
+}
+ 
+class Sun {
+  -FallingPosition: Point
+  -isFalling: bool
+  -isSelecting: bool
+  -sunInterval: int
+  -sunTimer: float
+  +Sun()
+  +~Sun()
+  +update(f1: float, f2: float): void
+  +draw(window: RenderWindow): void
+  +move(f: float): void
+  +setFallingPosition(f1: float, f2: float): void
+  +setSelecting(): void
+}
+ 
+class SunFlower {
+  -sunTimer: float
+  -sunInterval: int
+  +SunFlower()
+  +~SunFlower()
+  +action(f: float, arr: MovingObjectArr*): void
+  +generateSun(arr: MovingObjectArr*): void
+  +draw(window: RenderWindow): void
+}
+ 
+class Wallnut {
+  -dx: float
+  -isMoving: bool
+  -rotate: float
+  -maxRotate: int
+  -currentposition: Point
+  +frameTimer: float
+  +maxFrameTime: int
+  +Wallnut()
+  +~Wallnut()
+  +draw(window: RenderWindow): void
+  +action(f: float, arr: MovingObjectArr*): void
+  +setPosition(f1: float, f2: float): void
+}
+ 
+class ZombieArr {
+  -arr: Zombie**
+  -capacity: int
+  -size: int
+  +ZombieArr()
+  +~ZombieArr()
+  +push_back(obj: Zombie*): void
+  +pop_back(): void
+  +getSize(): int
+  +empty(): bool
+  +clear(): void
+  +resize(): void
+  +at(index: int): Zombie*
+  +insert(obj: Zombie*, index: int): void
+  +erase(index: int): void
+}
+ 
+class zombieGen {
+  -instance: zombieGen*$
+  -zombieGen()
+  +~zombieGen()
+  +getInstance(): zombieGen*$
+  +createZombie(zombieName: string): Zombie*
+}
+ 
+ 
+%% Relationships
+object <|-- character : Inheritance
+object <|-- MovingObject : Inheritance
+character <|-- Plant : Inheritance
+character <|-- Zombie : Inheritance
+MovingObject <|-- ammo : Inheritance
+MovingObject <|-- LawnMower : Inheritance
+MovingObject <|-- Sun : Inheritance
+Plant <|-- Cactus : Inheritance
+Plant <|-- cherry : Inheritance
+Plant <|-- ShootingPlant : Inheritance
+Plant <|-- SunFlower : Inheritance
+Plant <|-- Wallnut : Inheritance
+ShootingPlant <|-- frozenPea : Inheritance
+ShootingPlant <|-- PeaShooter : Inheritance
+ShootingPlant <|-- Repeater : Inheritance
+ammo <|-- explosion : Inheritance
+ammo <|-- frozenPeaBullet : Inheritance
+ammo <|-- Pea : Inheritance
+Zombie <|-- flyingZom : Inheritance
+Zombie <|-- SimpleZombie : Inheritance
+Level <|-- garden : Inheritance
+ 
+%% Compositions
+object "1" *-- "1" Point : position
+Card "1" *-- "1" Point : position
+Sun "1" *-- "1" Point : FallingPosition
+Wallnut "1" *-- "1" Point : currentposition
+Level "1" *-- "1" Shop : shop
+Level "1" *-- "1" playground : lawn
+playground "1" *-- "1" MovingObjectArr : movingObjectsArray
+playground "1" *-- "1" PlantArr : plantsArray
+playground "1" *-- "1" ZombieArr : zombieArray
+SimpleZombie "1" *-- "1" Point : LostHeadPosition
+ 
+%% Aggregations
+MovingObjectArr "1" o-- "0..*" MovingObject : contains
+PlantArr "1" o-- "0..*" Plant : contains
+ZombieArr "1" o-- "0..*" Zombie : contains
+Shop "1" o-- "0..9" Card : listOfCards
+ 
+%% Associations
+playground "1" --> "1" plantGen : uses
+playground "1" --> "1" zombieGen : uses
+ 
+%% Friend
+object .. playground : friend

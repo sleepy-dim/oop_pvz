@@ -1,5 +1,4 @@
-#include "SimpleZombie.h"
-#include "Header.h"
+#include "simpleZom.h"
 SimpleZombie::SimpleZombie() {
 	
 	totalIntervals = 12 ;

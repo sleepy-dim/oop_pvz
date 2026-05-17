@@ -8,7 +8,7 @@ public:
 	garden(int level);
 	void draw(RenderWindow& window) override;
     void update(float deltaTime) override;
-	void SpawnZombies() override;
+	void zombieSpawn() override;
 	void input(RenderWindow& windowzz);
 	void loadLawnMowers() override;
 };

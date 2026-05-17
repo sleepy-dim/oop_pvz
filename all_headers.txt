@@ -1,0 +1,945 @@
+#ifndef ammo_h
+#define ammo_h
+
+#pragma once
+#include "MovingObject.h"
+
+
+class ammo : public MovingObject 
+{
+protected:
+	float damage;
+public:
+	ammo();		
+	float getDamage();
+	void draw(RenderWindow& ) override ;
+	void move(float) override;
+	void update(float time, float speed)override;
+	bool isExist() override;
+};
+#endif
+#pragma once
+#include "Plant.h"
+class Cactus : public Plant
+{
+public:
+	Cactus();
+	void action(float deltaTime, MovingObjectArr*) override;
+	void draw(RenderWindow&) override;
+	void setPosition(float x, float y)override;
+	~Cactus();
+};
+#ifndef Card_h
+#define	Card_h
+#include <iostream>
+#include <string>
+#include "Point.h"
+#include <SFML/Graphics.hpp>
+using namespace sf;
+using namespace std;
+
+class Card
+{
+private:
+	Point position;
+	string name;
+	int cost;
+	int coolDown;
+	Texture texture;
+	Sprite sprite;
+	static Font font;
+	static bool assetsLoaded;
+
+public:
+	Card(string name, int cost, int coolDown, Point P);
+	void draw(RenderWindow& window, string slected);
+
+	int getCost();
+	int getCoolDown();
+	string getName();
+};
+
+#endif 
+#ifndef character_h
+#define character_h
+#include "object.h"
+#include <string>
+using namespace std;
+
+class character : public object
+{
+protected:
+	int health;
+	int damage;
+public:
+	string getName();
+	void setName(string name);
+	int getHealth();
+	void setHealth(int health);
+	int getDamage();
+	void setDamage(int damage);
+	bool isExist() override;
+};
+
+#endif
+#pragma once
+#include "Plant.h"
+class cherry : public Plant
+{
+	bool has_exploded = false;
+	float exploding_radius;
+	int time_to_explode;
+	float time_exploding = 0;
+	bool is_exploding = false;
+public:
+	cherry();
+	~cherry();
+	void draw(RenderWindow&)override;
+	void action(float, MovingObjectArr* )override;
+	bool isExist() override;
+
+private:
+	static Texture animationTextures[7];
+	static bool texturesLoaded;
+};
+#pragma once
+#include "ammo.h"
+
+class explosion : public ammo
+{
+	
+	float explosionTimer;
+	int  explosionTime;
+	float explosionRadius;
+public:
+	explosion(float);
+	
+	~explosion();
+	void update(float , float )override ;
+	void move(float)override;
+	void draw(RenderWindow &) override;
+	float getExplosionRadius();
+
+
+};
+#pragma once
+#include <iostream>
+using namespace std;
+#include "Zombie.h"
+class flyingZom :public Zombie
+{
+public:
+	flyingZom();
+	void action(float) override;
+	void move();
+	void draw(RenderWindow& window)override;
+	void animate(string) override;
+	void setPosition(float x, float y) override;
+	~flyingZom();
+};
+#pragma once
+#include "ShootingPlant.h"
+#include "MovingObject.h"
+
+class frozenPea : public ShootingPlant
+{
+public:
+	frozenPea();
+	void shoot(float, MovingObjectArr*) override;
+	void draw(sf::RenderWindow&) override;
+	~frozenPea();
+};
+#pragma once
+#include "ammo.h"
+class frozenPeaBullet : public ammo
+{
+public:
+	frozenPeaBullet();
+	void move(float)override;
+};
+#ifndef garden_h
+#define garden_h
+#include "Level.h"
+#include "LawnMower.h"
+class garden : public Level
+{
+public:
+	garden(int level);
+	void draw(RenderWindow& window) override;
+    void update(float deltaTime) override;
+	void SpawnZombies() override;
+	void input(RenderWindow& windowzz);
+	void loadLawnMowers() override;
+};
+
+#endif 
+#pragma once
+#include "MovingObject.h"
+
+
+class LawnMower : public MovingObject
+{
+
+
+	bool isMoving = false;
+	Texture movingTexture;
+	Sprite movingSprite;
+	float animationTimer = 0;
+
+public :
+
+	LawnMower();
+	void update(float, float)override;
+
+	void draw(RenderWindow&)override;
+	void move(float)override;
+	void setIsMoving (bool);
+	bool getIsMoving();
+
+
+	~LawnMower();
+
+};
+#ifndef Level_h
+#define Level_h
+
+#pragma once
+#include "playground.h"
+#include "Shop.h"
+#include <string>
+
+#include <SFML/Graphics.hpp>
+using namespace sf;
+class Level
+{
+protected:
+	
+	Shop shop;
+	playground gameLawn;
+	int levelNumber;
+	float last_screen;
+	Texture backgroundTexture;
+	Sprite backgroundSprite;
+	//int livesRemaining;
+	//bool is_animation;
+	void drawBackround(RenderWindow& window);
+	//void animation(RenderWindow &)  ;
+	//virtual void loadZombies() ;
+	int sunIntervals = 10;
+	float sunTimer = 0;
+	Texture lostTexture;
+	Sprite lostSprite;
+	Texture winTexture;
+	Sprite winSprite;
+
+	Texture pauseTexture;
+	Sprite pauseSprite;
+	Texture pauseScreenTexture;
+	Sprite pauseScreenSprite;
+	int livesRemaining;
+
+
+	Texture livesTexture;
+	Sprite livesSprite;
+
+	bool isPaused = false;
+	bool is_Lost = false;
+	bool is_Won = false;
+	bool isEnd = false;
+
+public:
+	
+	Level(int levelNumber);
+
+	virtual void loadLawnMowers() ;
+
+	virtual void draw(RenderWindow& window) = 0;
+	virtual void update(float) = 0;
+	virtual void takeInput(RenderWindow& window) ;
+	virtual void SpawnZombies() = 0;
+	void addSuntoShop(); 
+	void generateSun(float);
+	void drawPause (RenderWindow& window);
+	void checkLoose();
+	void checkWin();
+	bool getIsEnd();	
+	bool getIsWon();
+	bool getIsLost();
+	//virtual void checkCollisions() = 0 ;
+	//virtual void checkWin() = 0 ;
+	//virtual void checkLose() = 0;
+	//virtual void takeInput(RenderWindow& window) = 0 ;
+};
+
+#endif 
+#ifndef MovingObject_h
+#define MovingObject_h
+
+#pragma once
+#include "object.h"
+#include <string>
+
+class MovingObject :  public object
+{
+protected :
+
+	float dx;
+	float dy;
+	std::string type;
+	
+public :
+	virtual void update (float,float) = 0;
+	virtual void move(float) = 0;
+	virtual void draw(sf::RenderWindow & ) = 0;
+	std::string getType();
+	
+	void setVelocity(float dx, float dy);
+	float getdx();
+	float getdy();
+};
+
+#endif // !MovingObject_h
+
+#pragma once
+#ifndef MovingObjectArr_h
+#define MovingObjectArr_h
+
+#include "MovingObject.h"
+#include <iostream>
+
+class MovingObjectArr {
+private:
+    MovingObject** arr;
+    int capacity;
+    int size;
+
+public:
+    // Constructor
+    MovingObjectArr();
+
+    // Destructor
+    ~MovingObjectArr();
+
+    // Copy constructor (implemented for deep copy of the array)
+    MovingObjectArr(const MovingObjectArr& other);
+
+    // Assignment operator (implemented for deep copy of the array)
+    MovingObjectArr& operator=(const MovingObjectArr& other);
+
+    // Push back element
+    void push_back(MovingObject* obj);
+
+    // Pop back element
+    void pop_back();
+
+    // Get size
+    int getSize() const;
+
+    // Check if empty
+    bool empty() const;
+
+    // Clear all elements
+    void clear();
+
+    // Resize the array
+    void resize();
+
+    // Access element at index
+
+    MovingObject* at(int index) const;
+
+    // Insert element at index
+    void insert(MovingObject* obj, int index);
+
+    // Erase element at index
+    void erase(int index);
+};
+
+
+#endif 
+#ifndef object_h
+#define object_h
+
+#pragma once
+
+
+#include <SFML/Graphics.hpp>
+using namespace sf;
+#include <iostream>
+#include <string>
+using namespace std;
+#include "Point.h"
+
+class object
+{
+	friend class playground;
+
+protected:
+	sf::Texture texture;
+	sf::Sprite sprite;
+	static int count;
+	Point position;
+	bool isAlive;
+	int frame;
+	int maxFrame;
+	string name; 
+	
+
+
+public:
+	
+	object();
+	virtual bool isExist();
+	void setAlive(bool isAlive);
+	void setPosition(Point);
+	Point getPosition();
+	virtual void setPosition(float x, float y);
+	static int getCount();
+	string getName();
+	Texture getTexture();
+
+};
+
+
+
+
+#endif
+#pragma once
+#include "ammo.h"
+
+class Pea : public ammo
+{
+public:
+	Pea();
+	void move (float) override;
+
+};
+
+#ifndef PeaShooter_h
+#define PeaShooter_h
+
+#pragma once
+#include "ShootingPlant.h"
+
+#include <iostream> 
+using namespace std;
+class PeaShooter :public ShootingPlant
+{
+
+
+public:
+	PeaShooter();
+	virtual void shoot( float deltaTime , MovingObjectArr* );
+	~PeaShooter();
+	void draw(RenderWindow & );
+
+};
+
+
+#endif // !PeaShooter_h
+#pragma once 
+#ifndef PLANT_H
+#define PLANT_H
+
+#include "character.h"
+#include "MovingObject.h"
+
+class Plant : public character
+{
+protected:
+	int cost;
+public:
+	int getCost();
+	void setCost(int cost);
+	virtual void draw(sf::RenderWindow&);
+	virtual void action(float, MovingObjectArr*) = 0;
+	virtual ~Plant();
+};
+
+#endif
+
+#ifndef PlantArr_h
+#define PlantArr_h
+
+#pragma once
+#include "Plant.h"
+#include <iostream>
+
+class PlantArr {
+private:
+    Plant** arr;
+    int capacity;
+    int size;
+
+public:
+    // Constructor
+    PlantArr();
+
+    // Destructor
+    ~PlantArr();
+
+    // Copy constructor (deleted for safety as it's an owning pointer array)
+    PlantArr(const PlantArr& other) = delete;
+
+    // Assignment operator (deleted for safety as it's an owning pointer array)
+    PlantArr& operator=(const PlantArr& other) = delete;
+
+    // Push back element
+    void push_back(Plant* obj);
+
+    // Pop back element
+    void pop_back();
+
+    // Get size
+    int getSize() const;
+
+    // Check if empty
+    bool empty() const;
+
+    // Clear all elements
+    void clear();
+
+    // Resize the array
+    void resize();
+
+    // Access element at index
+    Plant* at(int index) const;
+
+    // Insert element at index
+    void insert(Plant* obj, int index);
+
+    // Erase element at index
+    void erase(int index);
+};
+
+#endif 
+#pragma once
+#include "Plant.h"
+#include "PeaShooter.h"
+#include "SunFlower.h"
+#include "frozenPea.h"
+#include "Repeater.h"
+#include "cherry.h"
+#include "Wallnut.h"
+#include "cactus.h"
+#include <iostream>
+#include <string>
+using namespace std;
+
+
+class plantGen {
+private:
+	plantGen();
+	static plantGen* instance;
+
+public:
+	static plantGen* getInstance();
+	Plant* createPlant(string plantName);
+	~plantGen();
+};
+#ifndef playground_h
+#define playground_h
+#pragma once
+#include "object.h"
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <string>
+#include "plantGen.h"
+#include "Plant.h"
+#include "MovingObject.h"
+#include "Zombie.h"
+#include "zombieGen.h"
+
+using namespace sf;
+
+class zombieGen;
+class plantGen;
+
+class playground
+{
+private:
+	int GRID_START_X ;
+	int GRID_START_Y ;
+	int BoxHeight;
+	int BoxWidth;
+	bool available [5][9];
+	
+	bool isLost;
+
+	
+public:
+
+
+	MovingObjectArr movingObjectsArray;
+	ZombieArr zombieArray;
+	zombieGen* zombieGen;
+	PlantArr plantsArray;
+	plantGen* plantGen;
+
+
+
+public:
+	playground(int);
+	int getboxHeight();
+	int getboxWidth();
+
+	int getGRID_START_X();
+	int getGRID_START_Y();
+	Point getGridPosition(float x, float y);
+
+	PlantArr& getPlantsArray();
+	
+	bool isBoxAvailable(int x, int y);
+	void setBoxAvailable(int x, int y, bool value);
+	
+	void addPlant(float x, float y, string type);   //e/////////Might need to change the type to string
+	void updatePlants(float, MovingObjectArr*);
+	void drawPlants(RenderWindow& window);
+
+
+	void addZombie(float x, float y, string type);
+	void updateZombie(float);
+	
+	void drawZombie(RenderWindow& window);
+
+
+	void drawMovingObjects(RenderWindow& window);
+	void updateMovingObjects(float);
+
+	void selectSun(float x, float y); //Select Sun from screen
+
+	void removeDead();
+	bool removePlant(float x, float y);	
+	bool waterPlant(float x, float y);
+
+	void collisionAmmo_Zombie();
+	void collisionPlant_Zombie();
+
+
+	bool checkWin();
+	bool checkLost();
+	~playground();
+
+
+};
+
+
+#endif
+#ifndef POINT_H
+#define POINT_H
+#include <cmath>
+
+struct Point
+{
+    float x;
+    float y;
+
+    Point(float x, float y) : x(x), y(y) {}
+    Point() : x(0), y(0) {}
+
+    // Operator Overloading for Rubric Requirement
+    Point operator+(const Point& other) const {
+        return Point(x + other.x, y + other.y);
+    }
+
+    Point operator-(const Point& other) const {
+        return Point(x - other.x, y - other.y);
+    }
+
+    bool operator==(const Point& other) const {
+        return (x == other.x && y == other.y);
+    }
+
+    Point& operator+=(const Point& other) {
+        x += other.x;
+        y += other.y;
+        return *this;
+    }
+
+    // Friend Function that uses the - operator (Useful for collision/distance checking)
+    friend float distance(const Point& p1, const Point& p2) {
+        Point diff = p1 - p2; // Utilizes the overloaded - operator
+        return std::sqrt(diff.x * diff.x + diff.y * diff.y);
+    }
+
+    // Friend Function + Operator Overloading
+    friend std::ostream& operator<<(std::ostream& os, const Point& p) {
+        os << "(" << p.x << ", " << p.y << ")";
+        return os;
+    }
+};
+
+#endif
+#pragma once
+#include "ShootingPlant.h"
+#include "MovingObject.h"
+
+class Repeater : public ShootingPlant
+{
+	int bulletinterval_2;
+	float bulletTimer_2;
+public : 
+	Repeater();
+	void shoot(float, MovingObjectArr *)override;
+	
+	void draw(RenderWindow & )override;
+	
+};
+#pragma once
+#include "Plant.h"
+class ShootingPlant : public Plant
+{
+	protected :
+	float BulletSpeed;
+	int bulletInterval;
+	float bulletTimer ;
+
+public:
+	virtual void action(float, MovingObjectArr*);
+	virtual void shoot(float , MovingObjectArr*) = 0;
+	virtual ~ShootingPlant() ;
+
+};
+
+
+
+
+
+#pragma once
+#include <SFML/Graphics.hpp>
+#include "Card.h"
+#include <iostream>
+#include <string>
+using namespace sf;
+using namespace std;
+
+class Shop
+{
+	Card* listOfCards [9] ;
+	Card* selectedPlant;
+
+	int sun;
+	int level;
+	
+
+public:
+	Shop(int level);
+
+	void draw(RenderWindow & window);
+	//void update();
+	void selectPlant(string plantName);
+	void selectPlant(float , float );
+	void setSun(int sun);
+	int  getSun();
+	bool isPurchasable();
+	void purchase();
+	string getSelectedPlant();
+	void incrementSun(int);
+
+
+};
+
+
+#pragma once
+#include <iostream>
+#include <SFML/Graphics.hpp>
+#include "Zombie.h"
+
+using namespace std;
+class SimpleZombie :public Zombie{
+
+	
+public:
+	SimpleZombie();
+
+	void action(float) override;
+	void animate(string) override ;
+	void draw(RenderWindow& window) override;
+
+	~SimpleZombie();
+
+};
+
+#pragma once
+#include "MovingObject.h"
+class Sun : public MovingObject
+{
+	Point FallingPosition;
+	bool isFalling;
+	bool isSelecting;
+	int sunInterval = 24 ;
+	float sunTimer = 0;
+public:
+
+	Sun();
+	~Sun();
+	void update(float , float )override;
+	void draw(RenderWindow & )override ;
+	void move(float)override;
+	void setFallingPosition(float, float);
+	void setSelecting();
+
+	
+};
+
+#pragma once
+#include "Plant.h" 
+
+class SunFlower : public Plant
+{
+	float sunTimer;
+	int sunInterval;
+
+	public:
+	SunFlower();
+	void action(float , MovingObjectArr* )override; 
+	void generateSun(MovingObjectArr*);
+	void draw(RenderWindow & )override;
+	~SunFlower();
+};
+#pragma once
+#include "Plant.h"
+class Wallnut : public Plant
+{
+	float dx;
+	bool isMoving;
+	float rotate;
+	int maxRotate;
+
+	Point currentposition;
+public:
+	Wallnut();
+	~Wallnut();
+
+	void draw(RenderWindow& ) override;
+	void action(float, MovingObjectArr*)override;
+	void setPosition(float, float)override;
+	float frameTimer = 0;
+	int maxFrameTime = 4;
+};
+#ifndef ZOMBIE_H
+#define ZOMBIE_H
+
+#pragma once
+#include "character.h"
+#include <SFML/Graphics.hpp>
+#include <string>
+
+class Zombie : public character
+{
+protected:
+	float dx;
+	float dy;
+	bool isMoving;
+	bool isFrozen;
+	float isFrozenTimer;
+	float totalFrozenTime;
+	float totalIntervals;
+	float timer;
+	std::string state;
+
+	bool isWithoutHead;
+	float headTimer;
+	bool isDying;
+	bool isBurnt;
+	float burntTimer;
+
+public:
+	static int killCount;
+
+	Zombie();
+	virtual ~Zombie();
+
+	float getdx();
+	float getdy();
+	void setSpeed(float dx, float dy);
+
+	void draw(sf::RenderWindow& window) override;
+	void action(float x);
+
+	void setState(std::string s);
+	std::string getState();
+
+	void setIsMoving(bool b);
+	bool getIsMoving();
+
+	bool setIsFrozen(bool isFrozen);
+
+	bool isExist() override;
+	void setBurnt();
+	bool isCollidable();
+};
+
+#endif
+
+#ifndef ZombieArr_h
+#define ZombieArr_h
+
+#pragma once
+#include "Zombie.h"
+
+class ZombieArr {
+private:
+    Zombie** arr;
+    int capacity;
+    int size;
+
+public:
+    // Constructor
+    ZombieArr();
+
+    // Destructor
+    ~ZombieArr();
+
+    // Copy constructor (deleted for safety as it's an owning pointer array)
+    ZombieArr(const ZombieArr& other) = delete;
+
+    // Assignment operator (deleted for safety as it's an owning pointer array)
+    ZombieArr& operator=(const ZombieArr& other) = delete;
+
+    // Push back element
+    void push_back(Zombie* obj);
+
+    // Pop back element
+    void pop_back();
+
+    // Get size
+    int getSize() const;
+
+    // Check if empty
+    bool empty() const;
+
+    // Clear all elements
+    void clear();
+
+    // Resize the array
+    void resize();
+
+    // Access element at index
+    Zombie* at(int index) const;
+
+    // Insert element at index
+    void insert(Zombie* obj, int index);
+
+    // Erase element at index
+    void erase(int index);
+};
+
+#endif 
+#pragma once
+#include "Zombie.h"
+#include "SimpleZombie.h"
+#include "flyingZom.h"
+#include <iostream>
+#include <string>
+
+class zombieGen {
+private:
+	zombieGen(); 
+	static zombieGen* instance; 
+
+public:
+	static zombieGen* getInstance(); 
+	Zombie* createZombie(std::string zombieName);
+	~zombieGen(); 
+};

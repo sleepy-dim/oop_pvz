@@ -52,7 +52,7 @@ void explosion::update(float deltaTime, float time)
 
 void explosion::draw(RenderWindow& window)
 {
-	texture.loadFromFile("Assets\\explosion\\explosion_1\\explosion_" + to_string(((int)(explosionTimer * 10.0 / totalexplosionTime ))+1) + ".png");
+	texture.loadFromFile("Assets\\explosion\\explosion_1\\explosion_" + to_string(((int)(explosionTimer * 10.0 / explosionTime ))+1) + ".png");
 	sprite.setTexture(texture);
 	sprite.setPosition(position.x - 20, position.y);
 	window.draw(sprite);

@@ -5,14 +5,15 @@
 
 using namespace std;
 class SimpleZombie :public Zombie{
-
-	
+	Point LostHeadPosition;
+	Texture headtexture;
+	Sprite headSprite;
 public:
 	SimpleZombie();
 
 	void action(float) override;
 	void animate(string) override ;
-	void draw(RenderWindow& window) override;
+	void draw(RenderWindow& window);
 
 	~SimpleZombie();
 

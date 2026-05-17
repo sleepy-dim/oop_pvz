@@ -13,7 +13,7 @@ class Level
 protected:
 	
 	Shop shop;
-	playground gameLawn;
+	playground lawn;
 	int levelNumber;
 	float last_screen;
 	Texture backgroundTexture;
@@ -41,8 +41,8 @@ protected:
 	Sprite livesSprite;
 
 	bool isPaused = false;
-	bool is_Lost = false;
-	bool is_Won = false;
+	bool hasLost = false;
+	bool hasWon = false;
 	bool isEnd = false;
 
 public:
@@ -54,7 +54,7 @@ public:
 	virtual void draw(RenderWindow& window) = 0;
 	virtual void update(float) = 0;
 	virtual void takeInput(RenderWindow& window) ;
-	virtual void SpawnZombies() = 0;
+	virtual void zombieSpawn() = 0;
 	void addSuntoShop(); 
 	void generateSun(float);
 	void drawPause (RenderWindow& window);

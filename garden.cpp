@@ -15,7 +15,7 @@ garden::garden(int level) : Level(level)
 	}
 	backgroundSprite.setTexture(backgroundTexture);
 
-	this->SpawnZombies();
+	this->zombieSpawn();
 	this->loadLawnMowers();
 }
 
@@ -69,10 +69,6 @@ void garden::zombieSpawn() {
 		lawn.addZombie(1000 + i * 300, rand() % 5 * 100 + 20, "SimpleZombie");
 	}
 }
-
-
-
-
 
 
 

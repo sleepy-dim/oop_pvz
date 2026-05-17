@@ -1,5 +1,5 @@
 #include "cherry.h"
-#include "Explosion.h"
+#include "explosion.h"
 #include <iostream>
 
 Texture cherry::animationTextures[7];
@@ -73,9 +73,9 @@ void cherry::action(float deltaTime, MovingObjectArr* movingObjectArr)
 
 	if (exploding)
 	{
-		Explosion* explosion = new Explosion(radius);
-		explosion->setPosition(position.x,position.y);
-		movingObjectArr->push_back(explosion);
+		explosion* exp = new explosion(radius);
+		exp->setPosition(position.x,position.y);
+		movingObjectArr->push_back(exp);
 			
 
 		exploding = false;

@@ -50,32 +50,6 @@ PlantArr::~PlantArr() {
 	delete[] arr;
 }
 
-PlantArr::PlantArr(const PlantArr& other) {
-	capacity = other.capacity;
-	size = other.size;
-	arr = new Plant * [capacity];
-	for (int i = 0; i < size; i++) {
-		arr[i] = other.arr[i];
-	}
-}
-
-PlantArr& PlantArr::operator=(const PlantArr& other) {
-	if (this != &other) {
-		// Cleanup existing objects before reassignment
-		for (int i = 0; i < size; i++) {
-			delete arr[i];
-		}
-		delete[] arr;
-
-		capacity = other.capacity;
-		size = other.size;
-		arr = new Plant * [capacity];
-		for (int i = 0; i < size; i++) {
-			arr[i] = other.arr[i];
-		}
-	}
-	return *this;
-}
 
 void PlantArr::push_back(Plant* obj) {
 	if (size == capacity) {

@@ -16,7 +16,7 @@ frozenPeaBullet::frozenPeaBullet()
 
 }
 
-void FrozenPea::move(float)
+void frozenPeaBullet::move(float)
 {
 	position.x += dx;
 	position.y += dy;

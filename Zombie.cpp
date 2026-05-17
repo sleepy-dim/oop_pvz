@@ -18,31 +18,6 @@ ZombieArr::~ZombieArr() {
 	delete[] arr;
 }
 
-ZombieArr::ZombieArr(const ZombieArr& other) {
-	capacity = other.capacity;
-	size = other.size;
-	arr = new Zombie * [capacity];
-	for (int i = 0; i < size; i++) {
-		arr[i] = other.arr[i];
-	}
-}
-
-ZombieArr& ZombieArr::operator=(const ZombieArr& other) {
-	if (this != &other) {
-		for (int i = 0; i < size; i++) {
-			delete arr[i];
-		}
-		delete[] arr;
-		
-		capacity = other.capacity;
-		size = other.size;
-		arr = new Zombie * [capacity];
-		for (int i = 0; i < size; i++) {
-			arr[i] = other.arr[i];
-		}
-	}
-	return *this;
-}
 
 void ZombieArr::push_back(Zombie* obj) {
 	if (size == capacity) {

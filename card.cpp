@@ -4,8 +4,8 @@
 Font Card::font;
 bool Card::assetsLoaded = false;
 
-Card::Card(string name, int cost, int coolDown, Point P)
-	: position(P), name(name), cost(cost), coolDown(coolDown)
+Card::Card(string name, int cost, int coolDown, Point P, bool isUnlocked)
+	: position(P), name(name), cost(cost), coolDown(coolDown), isUnlocked(isUnlocked)
 {
 	if (!assetsLoaded)
 	{

@@ -2,11 +2,11 @@
 
 
 
-String character::getName() {
+string character::getName() {
 	return name;
 }
 
-void character::setName(String n) {
+void character::setName(string n) {
 	name = n;
 }
 

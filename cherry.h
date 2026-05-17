@@ -2,11 +2,11 @@
 #include "Plant.h"
 class cherry : public Plant
 {
-	bool has_exploded = false;
-	float exploding_radius;
+	bool exploded = false;
+	float radius;
 	int time_to_explode;
-	float time_exploding = 0;
-	bool is_exploding = false;
+	float timeExploding = 0;
+	bool exploding = false;
 public:
 	cherry();
 	~cherry();

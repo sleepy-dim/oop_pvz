@@ -8,7 +8,7 @@ public:
 	flyingZom();
 	void action(float) override;
 	void move();
-	void draw(RenderWindow& window)override;
+	void draw(RenderWindow& window);
 	void animate(string) override;
 	void setPosition(float x, float y) override;
 	~flyingZom();

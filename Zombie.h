@@ -35,8 +35,10 @@ public:
 	float getdy();
 	void setSpeed(float dx, float dy);
 
-	void draw(sf::RenderWindow& window) override;
-	void action(float x);
+	void draw(sf::RenderWindow& window);
+	virtual void action(float x);
+
+	virtual void animate(std::string) {};
 
 	void setState(std::string s);
 	std::string getState();
