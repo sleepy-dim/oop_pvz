@@ -1,5 +1,6 @@
 #include "playground.h"
 #include "LawnMower.h"
+#include "DancingZombie.h"
 #include <cmath>
 playground::playground(int level)
 {
@@ -68,6 +69,10 @@ void playground::addZombie(float x, float y, string type) {
 
 	if(zombie != nullptr)
 	{
+		if (type == "DancingZombie")
+		{
+			((DancingZombie*)zombie)->getLawnRef(this);
+		}
 		zombie->setPosition(x, y);
 		zombieArray.push_back(zombie);
 	}

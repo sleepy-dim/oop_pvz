@@ -51,8 +51,11 @@ void garden::update(float deltaTime)
 					zombieSpawnInterval -= 0.5f;
 				}
 
-				// Spawn a random zombie: SimpleZombie or FlyingZombie
-				string zombieType = (rand() % 2 == 0) ? "SimpleZombie" : "FlyingZombie";
+				// Spawn a random zombie: SimpleZombie, FlyingZombie, or DancingZombie
+				int roll = rand() % 3;
+				string zombieType = "SimpleZombie";
+				if (roll == 1) zombieType = "FlyingZombie";
+				else if (roll == 2) zombieType = "DancingZombie";
 				lawn.addZombie(1100, rand() % 5 * 100 + 20, zombieType);
 			}
 
@@ -85,7 +88,10 @@ void garden::input(RenderWindow& window)
 void garden::zombieSpawn() {
 	for (int i = 0; i < 10; i++)
 	{
-		string zombieType = (rand() % 2 == 0) ? "SimpleZombie" : "FlyingZombie";
+		int roll = rand() % 3;
+		string zombieType = "SimpleZombie";
+		if (roll == 1) zombieType = "FlyingZombie";
+		else if (roll == 2) zombieType = "DancingZombie";
 		lawn.addZombie(1000 + i * 300, rand() % 5 * 100 + 20, zombieType);
 	}
 }

@@ -24,6 +24,7 @@ set(SOURCES
     cherry.cpp
     explosion.cpp
     cactus.cpp
+    DancingZombie.cpp
     flyingZom.cpp
     frozenPea.cpp
     frozenPeaBullet.cpp
@@ -56,6 +57,7 @@ set(HEADERS
     cherry.h
     explosion.h
     cactus.h
+    DancingZombie.h
     flyingZom.h
     frozenPea.h
     frozenPeaBullet.h

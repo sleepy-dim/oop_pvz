@@ -1,4 +1,5 @@
 #include "zombieGen.h"
+#include "DancingZombie.h"
 
 zombieGen* zombieGen::instance = nullptr;
 
@@ -28,7 +29,7 @@ Zombie* zombieGen::createZombie(std::string zombieName) {
     case 3:
         return new flyingZom();
     case 4:
-        return nullptr; // DancingZombie missing
+        return new DancingZombie(); // DancingZombie integrated!
     default:
         return nullptr;
     }
