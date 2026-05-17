@@ -343,8 +343,8 @@ void playground::collisionAmmo_Zombie()
 				}
 				else if (movingObjectsArray.at(i)->getType() == "Explosion")
 				{
-					//Point Z(zombieArray.at(j)->getPosition().x + ( zombieArray.at(j)->getTexture().getSize().x /2 ), zombieArray.at(j)->getPosition().y + (zombieArray.at(j)->getTexture().getSize().y / 2));
-					//Point M(movingObjectsArray.at(i)->getPosition().x + ((movingObjectsArray.at(i)->getTexture().getSize().x) / 2.0), movingObjectsArray.at(i)->getPosition().y + ((movingObjectsArray.at(i)->getTexture().getSize().y) / 2.0 ));
+					//coordinate Z(zombieArray.at(j)->getPosition().x + ( zombieArray.at(j)->getTexture().getSize().x /2 ), zombieArray.at(j)->getPosition().y + (zombieArray.at(j)->getTexture().getSize().y / 2));
+					//coordinate M(movingObjectsArray.at(i)->getPosition().x + ((movingObjectsArray.at(i)->getTexture().getSize().x) / 2.0), movingObjectsArray.at(i)->getPosition().y + ((movingObjectsArray.at(i)->getTexture().getSize().y) / 2.0 ));
 
 					float radius  = sqrt(pow(M.x - Z.x, 2) + pow(M.y - Z.y, 2));
 					if (radius < 200)
