@@ -261,11 +261,7 @@ void Level::checkLoose()
 
 void Level::checkWin()
 {
-    if (lawn.checkWin())
-    {
-        isPaused = true;
-        hasWon = true;
-    }
+    // Endless mode - no win condition, runs until death
 }
 
 void Level::generateSun(float deltaTime)
