@@ -36,6 +36,7 @@ void garden::update(float deltaTime)
 	
 		if (!isPaused)
 		{
+			timeSurvived += deltaTime;
 
 			lawn.updateMovingObjects(deltaTime);
 			lawn.updatePlants(deltaTime, &(lawn.movingObjectsArray));

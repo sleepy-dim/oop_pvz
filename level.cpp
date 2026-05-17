@@ -1,7 +1,9 @@
 #include "Level.h"
 #include "Sun.h"
 #include "LawnMower.h"
+#include "Zombie.h"
 #include <iostream>
+#include <fstream>
 
 using namespace sf;
 using namespace std;
@@ -222,11 +224,18 @@ void Level::takeInput(RenderWindow& window)
         }
 
         // --- KEYBOARD INPUT ---
-        if (event.type == Event::KeyPressed && event.key.code == Keyboard::Enter)
+        if (event.type == Event::KeyPressed)
         {
-            if (hasLost || hasWon)
+            if (event.key.code == Keyboard::Enter)
             {
-                isEnd = true;
+                if (hasLost || hasWon)
+                {
+                    isEnd = true;
+                }
+            }
+            else if (event.key.code == Keyboard::S)
+            {
+                saveProgress();
             }
         }
     }
@@ -297,4 +306,37 @@ bool Level::getIsWon()
 bool Level::getIsLost()
 {
     return hasLost;
+}
+
+void Level::saveProgress()
+{
+    std::ofstream out("savegame.txt");
+    if (out.is_open())
+    {
+        out << levelNumber << "\n" << timeSurvived << "\n" << Zombie::killCount << "\n" << shop.getSun() << "\n";
+        out.close();
+        cout << "Game Saved to savegame.txt" << endl;
+    }
+}
+
+void Level::loadProgress()
+{
+    std::ifstream in("savegame.txt");
+    if (in.is_open())
+    {
+        int lvl; float t; int k; int s;
+        if (in >> lvl >> t >> k >> s)
+        {
+            timeSurvived = t;
+            Zombie::killCount = k;
+            shop.setSun(s);
+            cout << "Game Loaded from savegame.txt" << endl;
+        }
+        in.close();
+    }
+}
+
+int Level::getScore()
+{
+    return (int)timeSurvived + Zombie::killCount;
 }

@@ -6,8 +6,14 @@
 using namespace sf;
 using namespace std;
 
-int main()
+int main(int argc, char** argv)
 {
+    bool loadSave = false;
+    for (int i = 1; i < argc; ++i) {
+        if (string(argv[i]) == "--load") {
+            loadSave = true;
+        }
+    }
     cout << "Starting main..." << endl;
     // Create the main game window
     RenderWindow window(VideoMode(1200, 800), "Plants vs Zombies", Style::Close);
@@ -31,6 +37,9 @@ int main()
     // Initialize the first level
     cout << "Initializing level 1..." << endl;
     garden* currentLevel = new garden(1);
+    if (loadSave) {
+        currentLevel->loadProgress();
+    }
     cout << "Level 1 initialized." << endl;
 
     // Clock for delta time
@@ -62,6 +71,9 @@ int main()
     }
 
     // Cleanup
+    if (currentLevel->getIsEnd()) {
+        cout << "GAME_OVER:" << currentLevel->getScore() << endl;
+    }
     delete currentLevel;
     window.close();
 

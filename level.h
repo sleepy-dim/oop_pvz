@@ -63,6 +63,11 @@ public:
 	bool getIsEnd();	
 	bool getIsWon();
 	bool getIsLost();
+
+	float timeSurvived = 0;
+	void saveProgress();
+	void loadProgress();
+	int getScore();
 	//virtual void checkCollisions() = 0 ;
 	//virtual void checkWin() = 0 ;
 	//virtual void checkLose() = 0;
