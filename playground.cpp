@@ -3,8 +3,8 @@
 #include <cmath>
 playground::playground(int level)
 {
-	plantGen = plantGen::getInstance();
-	zombieGen = zombieGen::getInstance();
+	m_plantGen = plantGen::getInstance();
+	m_zombieGen = zombieGen::getInstance();
 	for (int i = 0; i < 5; i++)
 	{
 		for (int j = 0; j < 9; j++)
@@ -64,16 +64,13 @@ void playground::drawMovingObjects(RenderWindow& window)
 
 void playground::addZombie(float x, float y, string type) {
 
-	Zombie* zombie = zombieGen->createZombie(type);
+	Zombie* zombie = m_zombieGen->createZombie(type);
 
-	
-	// if(zombie != NULL )
-	// {
-	// 	zombie->setPosition(x, y);
-	// 	// DancingZombie missing
-		
-	// 	zombieArray.push_back(zombie);
-	// }
+	if(zombie != nullptr)
+	{
+		zombie->setPosition(x, y);
+		zombieArray.push_back(zombie);
+	}
 }
 
 
@@ -87,7 +84,7 @@ void playground::drawZombie(RenderWindow& window)
 }
 void playground::addPlant(float x, float y, string type )   ///////////Might need to change the type to string
 {
-	Plant* plant = 	plantGen->createPlant(type);
+	Plant* plant = 	m_plantGen->createPlant(type);
 	if(plant != nullptr)
 	{
 		plant->setPosition(x, y);

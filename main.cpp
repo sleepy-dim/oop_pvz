@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "garden.h"
 #include <iostream>
 
@@ -7,12 +8,30 @@ using namespace std;
 
 int main()
 {
+    cout << "Starting main..." << endl;
     // Create the main game window
     RenderWindow window(VideoMode(1200, 800), "Plants vs Zombies", Style::Close);
     window.setFramerateLimit(60);
+    cout << "Window created." << endl;
+
+    // Load and play background music
+    sf::Music bgMusic;
+    if (!bgMusic.openFromFile("Assets/Sounds/Plants vs Zombies Theme.ogg"))
+    {
+        cout << "Error loading background music Assets/Sounds/Plants vs Zombies Theme.ogg!" << endl;
+    }
+    else
+    {
+        bgMusic.setLoop(true);
+        bgMusic.setVolume(40.f); // 40% volume is usually comfortable
+        bgMusic.play();
+        cout << "Background music playing successfully." << endl;
+    }
 
     // Initialize the first level
+    cout << "Initializing level 1..." << endl;
     garden* currentLevel = new garden(1);
+    cout << "Level 1 initialized." << endl;
 
     // Clock for delta time
     Clock gameClock;

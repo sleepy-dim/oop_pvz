@@ -16,7 +16,7 @@ private:
 	int coolDown;
 	Texture texture;
 	Sprite sprite;
-	static Font font;
+	static Font* font;
 	static bool assetsLoaded;
 	bool isUnlocked;
 

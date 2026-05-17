@@ -8,6 +8,7 @@
 #include "plantGen.h"
 #include "Plant.h"
 #include "MovingObject.h"
+#include "ammo.h"
 #include "Zombie.h"
 #include "zombieGen.h"
 
@@ -33,9 +34,9 @@ public:
 
 	MovingObjectArr movingObjectsArray;
 	ZombieArr zombieArray;
-	zombieGen* zombieGen;
+	zombieGen* m_zombieGen;
 	PlantArr plantsArray;
-	plantGen* plantGen;
+	plantGen* m_plantGen;
 
 
 

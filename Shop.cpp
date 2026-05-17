@@ -110,6 +110,8 @@ int Shop::getSun()
 
 string Shop::getSelectedPlant()
 {
+	if (selectedPlant == nullptr)
+		return "none";
 	return selectedPlant->getName();
 }
 

@@ -5,9 +5,15 @@ project(PlantsVsZombies)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Fix MSVC parallel PDB write issue
+if(MSVC)
+    add_compile_options(/FS /MP)
+endif()
+
 # Add SFML
 set(SFML_DIR "${CMAKE_CURRENT_SOURCE_DIR}/SFML/lib/cmake/SFML")
-find_package(SFML 2.5 COMPONENTS graphics window system audio REQUIRED)
+set(SFML_STATIC_LIBRARIES TRUE)
+find_package(SFML 2.6.1 COMPONENTS graphics window system audio REQUIRED)
 
 # Add all source files
 set(SOURCES
@@ -80,6 +86,17 @@ add_executable(PlantsVsZombies ${SOURCES} ${HEADERS})
 
 # Link SFML libraries
 target_link_libraries(PlantsVsZombies PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
+
+# Copy Assets folder and DLLs to the output directory after build
+add_custom_command(TARGET PlantsVsZombies POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_SOURCE_DIR}/Assets"
+        "$<TARGET_FILE_DIR:PlantsVsZombies>/Assets"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${CMAKE_SOURCE_DIR}/openal32.dll"
+        "$<TARGET_FILE_DIR:PlantsVsZombies>/openal32.dll"
+    COMMENT "Copying Assets and DLLs to build output directory..."
+)
 
 # Include directories
 target_include_directories(PlantsVsZombies PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")

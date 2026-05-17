@@ -15,6 +15,6 @@ public:
 	bool isExist() override;
 
 private:
-	static Texture animationTextures[7];
+	static Texture* animationTextures[7];
 	static bool texturesLoaded;
 };

@@ -1,7 +1,9 @@
 #include "Card.h"
 #include <iostream>
+#include <algorithm>
+#include <cctype>
 
-Font Card::font;
+Font* Card::font = nullptr;
 bool Card::assetsLoaded = false;
 
 Card::Card(string name, int cost, int coolDown, Point P, bool isUnlocked)
@@ -9,12 +11,19 @@ Card::Card(string name, int cost, int coolDown, Point P, bool isUnlocked)
 {
 	if (!assetsLoaded)
 	{
-		if (!font.loadFromFile("Assets/fonts/burbank.otf"))
+		font = new Font();
+		if (!font->loadFromFile("Assets/fonts/burbank.otf"))
 			cout << "Error loading font" << endl;
 		assetsLoaded = true;
 	}
 
-	if (!texture.loadFromFile("Assets/Inventory-GameScreen/Cards/card_" + name + "_move.png"))
+	// Convert name to lowercase for file lookup
+	string nameLower = name;
+	for (char& c : nameLower) {
+		c = tolower(c);
+	}
+
+	if (!texture.loadFromFile("Assets/Inventory-GameScreen/Cards/card_" + nameLower + "_move.png"))
 		cout << "Error loading card texture for: " << name << endl;
 	
 	sprite.setTexture(texture);
@@ -41,7 +50,7 @@ void Card::draw(RenderWindow& window, string slcted)
 	}
 
 	Text text;
-	text.setFont(font);
+	text.setFont(*font);
 	text.setString(to_string(cost));
 	text.setCharacterSize(16);
 	text.setFillColor(Color::Black);

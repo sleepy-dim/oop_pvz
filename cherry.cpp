@@ -2,12 +2,14 @@
 #include "explosion.h"
 #include <iostream>
 
-Texture cherry::animationTextures[7];
+sf::Texture* cherry::animationTextures[7] = {nullptr};
 bool cherry::texturesLoaded = false;
 
 
-cherry::cherry(): time_to_explode(2), cost(150), health(1000), radius(100)
+cherry::cherry(): time_to_explode(2), radius(100)
 {
+	cost = 150;
+	health = 1000;
 	this->name = "cherry";
 	this->isAlive = true;
 	this->exploded = false;
@@ -17,8 +19,9 @@ cherry::cherry(): time_to_explode(2), cost(150), health(1000), radius(100)
 	{
 		for (int i = 0; i < 7; i++)
 		{
+			animationTextures[i] = new sf::Texture();
 			string path = "Assets/Plants/cherry/cherry_" + to_string(i) + ".png";
-			if (!animationTextures[i].loadFromFile(path))
+			if (!animationTextures[i]->loadFromFile(path))
 			{
 				cout << "Error loading texture: " << path << endl;
 			}
@@ -26,7 +29,7 @@ cherry::cherry(): time_to_explode(2), cost(150), health(1000), radius(100)
 		texturesLoaded = true;
 	}
 
-	this->sprite.setTexture(animationTextures[0]);
+	this->sprite.setTexture(*animationTextures[0]);
 }
 
  
@@ -37,7 +40,7 @@ void cherry::draw(RenderWindow& window)
 		int frame = (int)(this->timeExploding * 6 / 3);
 		if (frame >= 0 && frame < 7)
 		{
-			this->sprite.setTexture(animationTextures[frame]);
+			this->sprite.setTexture(*animationTextures[frame]);
 		}
 
 		sprite.setPosition(position.x - 20, position.y);
