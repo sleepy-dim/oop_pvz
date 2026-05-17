@@ -27,7 +27,7 @@ int object::getCount()
 	return count;
 }
 
-void object::setPosition(Point  p)
+void object::setPosition(coordinate  p)
 {
 	position.x = p.x;
 	position.y = p.y;
@@ -44,7 +44,7 @@ string object ::  getName()
 	return name ;
 }
 
-Point object::getPosition()
+coordinate object::getPosition()
 {
 	return this -> position;
 

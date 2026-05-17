@@ -7,15 +7,15 @@ Shop::Shop(int level)
 {
 	this->level = level;
 	sun = 1000;
-	listOfCards[0] = new Card("SunFlower", 50, 5, Point(25, 25), true);
-	listOfCards[1] = new Card("PeaShooter", 100, 5, Point(25, 105), true);
-	listOfCards[2] = new Card("WallNut", 50, 5, Point(25, 185), true); // level > 1 
-	listOfCards[3] = new Card("CherryBomb", 150, 5, Point(25, 265), true); //  level > 1
-	listOfCards[4] = new Card("Cactus", 100, 5, Point(25, 345), true);
-	listOfCards[5] = new Card("Repeater", 200, 5, Point(25, 425), true); // level > 1
-	listOfCards[6] = new Card("FrozenPeaShooter", 175, 5, Point(25, 505), true); // level > 2
-	listOfCards[7] = new Card("Shovel", 0, 0, Point(90 , 115), true);
-	listOfCards[8] = new Card("Water", 50, 5, Point(90 , 190), true);
+	listOfCards[0] = new Card("SunFlower", 50, 5, coordinate(25, 25), true);
+	listOfCards[1] = new Card("PeaShooter", 100, 5, coordinate(25, 105), true);
+	listOfCards[2] = new Card("WallNut", 50, 5, coordinate(25, 185), true); // level > 1 
+	listOfCards[3] = new Card("CherryBomb", 150, 5, coordinate(25, 265), true); //  level > 1
+	listOfCards[4] = new Card("Cactus", 100, 5, coordinate(25, 345), true);
+	listOfCards[5] = new Card("Repeater", 200, 5, coordinate(25, 425), true); // level > 1
+	listOfCards[6] = new Card("FrozenPeaShooter", 175, 5, coordinate(25, 505), true); // level > 2
+	listOfCards[7] = new Card("Shovel", 0, 0, coordinate(90 , 115), true);
+	listOfCards[8] = new Card("Water", 50, 5, coordinate(90 , 190), true);
 	selectedPlant = nullptr;
 }
 
@@ -134,7 +134,7 @@ void Shop::purchase()
 void Shop::selectPlant(float x , float y  ) {
 
 	Card * selectedPlant = nullptr;
-	Point startingPosition(25, 25);
+	coordinate startingPosition(25, 25);
 
 	if (x >= 25 && x <= 25 + 64)
 	{

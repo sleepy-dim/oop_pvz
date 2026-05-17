@@ -2,7 +2,7 @@
 #include "MovingObject.h"
 class Sun : public MovingObject
 {
-	Point FallingPosition;
+	coordinate FallingPosition;
 	bool isFalling;
 	bool isSelecting;
 	int sunInterval = 24 ;

@@ -2,7 +2,7 @@
 #define	Card_h
 #include <iostream>
 #include <string>
-#include "Point.h"
+#include "coordinate.h"
 #include <SFML/Graphics.hpp>
 using namespace sf;
 using namespace std;
@@ -10,7 +10,7 @@ using namespace std;
 class Card
 {
 private:
-	Point position;
+	coordinate position;
 	string name;
 	int cost;
 	int coolDown;
@@ -21,7 +21,7 @@ private:
 	bool isUnlocked;
 
 public:
-	Card(string name, int cost, int coolDown, Point P, bool isUnlocked = true);
+	Card(string name, int cost, int coolDown, coordinate P, bool isUnlocked = true);
 	void draw(RenderWindow& window, string slected);
 
 	int getCost();

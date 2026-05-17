@@ -47,7 +47,7 @@ public:
 
 	int getGRID_START_X();
 	int getGRID_START_Y();
-	Point getGridPosition(float x, float y);
+	coordinate getGridPosition(float x, float y);
 
 	PlantArr& getPlantsArray();
 	

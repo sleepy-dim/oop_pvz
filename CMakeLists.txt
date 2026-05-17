@@ -71,7 +71,7 @@ set(HEADERS
     Plant.h
     plantGen.h
     playground.h
-    Point.h
+    coordinate.h
     Repeater.h
     ShootingPlant.h
     Shop.h

@@ -6,7 +6,7 @@
 Font* Card::font = nullptr;
 bool Card::assetsLoaded = false;
 
-Card::Card(string name, int cost, int coolDown, Point P, bool isUnlocked)
+Card::Card(string name, int cost, int coolDown, coordinate P, bool isUnlocked)
 	: position(P), name(name), cost(cost), coolDown(coolDown), isUnlocked(isUnlocked)
 {
 	if (!assetsLoaded)

@@ -5,7 +5,7 @@
 
 using namespace std;
 class SimpleZombie :public Zombie{
-	Point LostHeadPosition;
+	coordinate LostHeadPosition;
 	Texture headtexture;
 	Sprite headSprite;
 public:

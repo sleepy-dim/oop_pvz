@@ -22,7 +22,7 @@ void ammo :: draw(RenderWindow & window )
 void ammo::move(float)
 {
 	// Utilizing the overloaded operator+=
-	position += Point(dx, dy);
+	position += coordinate(dx, dy);
 }
 
 void ammo::update(float time, float speed)

@@ -1,23 +1,23 @@
 classDiagram
  
-class Point {
+class coordinate {
   +x: float
   +y: float
-  +Point()
-  +Point(x: float, y: float)
-  +operator+(other: Point): Point
-  +operator-(other: Point): Point
-  +operator==(other: Point): bool
-  +operator+=(other: Point): Point
-  +distance(p1: Point, p2: Point): float [friend]
-  +operator_leftshift(os: ostream, p: Point): ostream [friend]
+  +coordinate()
+  +coordinate(x: float, y: float)
+  +operator+(other: coordinate): coordinate
+  +operator-(other: coordinate): coordinate
+  +operator==(other: coordinate): bool
+  +operator+=(other: coordinate): coordinate
+  +distance(p1: coordinate, p2: coordinate): float [friend]
+  +operator_leftshift(os: ostream, p: coordinate): ostream [friend]
 }
  
 class object {
   #texture: Texture
   #sprite: Sprite
   #count: int$
-  #position: Point
+  #position: coordinate
   #isAlive: bool
   #frame: int
   #maxFrame: int
@@ -25,8 +25,8 @@ class object {
   +object()
   +isExist(): bool
   +setAlive(isAlive: bool): void
-  +setPosition(p: Point): void
-  +getPosition(): Point
+  +setPosition(p: coordinate): void
+  +getPosition(): coordinate
   +setPosition(x: float, y: float): void
   +getCount(): int$
   +getName(): string
@@ -120,7 +120,7 @@ class Cactus {
 }
  
 class Card {
-  -position: Point
+  -position: coordinate
   -name: string
   -cost: int
   -coolDown: int
@@ -129,7 +129,7 @@ class Card {
   -font: Font$
   -assetsLoaded: bool$
   -isUnlocked: bool
-  +Card(name: string, cost: int, coolDown: int, P: Point, isUnlocked: bool)
+  +Card(name: string, cost: int, coolDown: int, P: coordinate, isUnlocked: bool)
   +draw(window: RenderWindow, selected: string): void
   +getCost(): int
   +getCoolDown(): int
@@ -332,7 +332,7 @@ class playground {
   +getboxWidth(): int
   +getGRID_START_X(): int
   +getGRID_START_Y(): int
-  +getGridPosition(x: float, y: float): Point
+  +getGridPosition(x: float, y: float): coordinate
   +getPlantsArray(): PlantArr&
   +isBoxAvailable(x: int, y: int): bool
   +setBoxAvailable(x: int, y: int, value: bool): void
@@ -380,7 +380,7 @@ class Shop {
 }
  
 class SimpleZombie {
-  -LostHeadPosition: Point
+  -LostHeadPosition: coordinate
   -headtexture: Texture
   -headSprite: Sprite
   +SimpleZombie()
@@ -406,7 +406,7 @@ class DancingZombie {
 }
  
 class Sun {
-  -FallingPosition: Point
+  -FallingPosition: coordinate
   -isFalling: bool
   -isSelecting: bool
   -sunInterval: int
@@ -435,7 +435,7 @@ class Wallnut {
   -isMoving: bool
   -rotate: float
   -maxRotate: int
-  -currentposition: Point
+  -currentposition: coordinate
   +frameTimer: float
   +maxFrameTime: int
   +Wallnut()
@@ -496,16 +496,16 @@ Zombie <|-- DancingZombie : Inheritance
 Level <|-- garden : Inheritance
  
 %% Compositions
-object "1" *-- "1" Point : position
-Card "1" *-- "1" Point : position
-Sun "1" *-- "1" Point : FallingPosition
-Wallnut "1" *-- "1" Point : currentposition
+object "1" *-- "1" coordinate : position
+Card "1" *-- "1" coordinate : position
+Sun "1" *-- "1" coordinate : FallingPosition
+Wallnut "1" *-- "1" coordinate : currentposition
 Level "1" *-- "1" Shop : shop
 Level "1" *-- "1" playground : lawn
 playground "1" *-- "1" MovingObjectArr : movingObjectsArray
 playground "1" *-- "1" PlantArr : plantsArray
 playground "1" *-- "1" ZombieArr : zombieArray
-SimpleZombie "1" *-- "1" Point : LostHeadPosition
+SimpleZombie "1" *-- "1" coordinate : LostHeadPosition
  
 %% Aggregations
 MovingObjectArr "1" o-- "0..*" MovingObject : contains

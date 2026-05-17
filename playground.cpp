@@ -107,8 +107,8 @@ void playground::drawPlants(RenderWindow& window)
 	}
 }
 
-Point playground::getGridPosition(float x, float y) {
-	Point p;
+coordinate playground::getGridPosition(float x, float y) {
+	coordinate p;
 	float relativeX = x - GRID_START_X;
 	float relativeY = y - GRID_START_Y;
 
@@ -229,8 +229,8 @@ void playground::removeDead()
 		if(plantsArray.at(i) != nullptr)
 		if (plantsArray.at(i)->getHealth() <= 0 || plantsArray.at(i)->isExist() == false)
 		{
-			Point p = plantsArray.at(i)->getPosition();
-			Point P = getGridPosition(p.x, p.y);
+			coordinate p = plantsArray.at(i)->getPosition();
+			coordinate P = getGridPosition(p.x, p.y);
 			setBoxAvailable(P.x, P.y, true);
 
 			plantsArray.erase(i);
@@ -311,8 +311,8 @@ void playground::collisionAmmo_Zombie()
 					continue;
 				}
 
-				Point M = movingObjectsArray.at(i)->getPosition();
-				Point Z = zombieArray.at(j)->getPosition();
+				coordinate M = movingObjectsArray.at(i)->getPosition();
+				coordinate Z = zombieArray.at(j)->getPosition();
 
 				if (movingObjectsArray.at(i)->getType() == "ammo")
 				{
@@ -373,13 +373,13 @@ void playground::collisionPlant_Zombie()
 						continue;
 					}
 
-					Point P = plantsArray.at(i)->getPosition();
-					Point Z = zombieArray.at(j)->getPosition();
+					coordinate P = plantsArray.at(i)->getPosition();
+					coordinate Z = zombieArray.at(j)->getPosition();
 					
 					// Calculate approximate center of the zombie for a more accurate radius check
-					Point zombieCenter(Z.x + 85, Z.y + 70);
+					coordinate zombieCenter(Z.x + 85, Z.y + 70);
 
-					// Using the 'distance' friend function from Point.h to detect collision!
+					// Using the 'distance' friend function from coordinate.h to detect collision!
 					if (distance(P, zombieCenter) < 80)
 					{
 						if (zombieArray.at(j)->getName() == "FlyingZombie" && plantsArray.at(i)->getName() == "Cactus")

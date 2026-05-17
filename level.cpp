@@ -125,7 +125,7 @@ void Level::addSuntoShop()
         // Check if object is an existing Sun
         if (currentObj->getName() == "Sun" && currentObj->isExist())
         {
-            Point pos = currentObj->getPosition();
+            coordinate pos = currentObj->getPosition();
             
             // If Sun reaches the shop icon coordinates, collect it
             bool isAtShopX = (pos.x >= 110 && pos.x <= 114);
@@ -155,7 +155,7 @@ void Level::takeInput(RenderWindow& window)
         if (event.type == Event::MouseButtonPressed)
         {
             Vector2i mousePos = Mouse::getPosition(window);
-            Point gridPos = lawn.getGridPosition(mousePos.x, mousePos.y);
+            coordinate gridPos = lawn.getGridPosition(mousePos.x, mousePos.y);
 
             if (event.mouseButton.button == Mouse::Left)
             {

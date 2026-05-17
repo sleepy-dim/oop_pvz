@@ -7,7 +7,7 @@ class Wallnut : public Plant
 	float rotate;
 	int maxRotate;
 
-	Point currentposition;
+	coordinate currentposition;
 public:
 	Wallnut();
 	~Wallnut();
