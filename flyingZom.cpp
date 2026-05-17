@@ -1,7 +1,7 @@
 #include "flyingZom.h"
 
 flyingZom::flyingZom() {
-	name = "flyingZom";
+	name = "FlyingZombie";
 	dx = -1;
 	dy = 0;
 	setHealth(4);
@@ -35,15 +35,7 @@ void flyingZom::action(float x) {
 }
 
 void flyingZom::animate(string state ) {
-	
-	string path;
-
-	if (state == "Moving")
-	{
-		 path = "Assets\\Zombies\\Ballon Zombie\\ballon zombie (" + to_string((int)((timer * 41.0 / totalIntervals )) + 1) + ").png";
-	}
-
-
+	string path = "Assets\\Zombies\\Ballon Zombie\\ballon zombie (" + to_string((int)((timer * 41.0 / totalIntervals )) + 1) + ").png";
 	texture.loadFromFile(path);
 	sprite.setTexture(texture);
 }

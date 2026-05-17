@@ -15,6 +15,8 @@ garden::garden(int level) : Level(level)
 	}
 	backgroundSprite.setTexture(backgroundTexture);
 
+	zombieTimer = 0.0f;
+	zombieSpawnInterval = 10.0f;
 	this->zombieSpawn();
 	this->loadLawnMowers();
 }
@@ -37,6 +39,22 @@ void garden::update(float deltaTime)
 		if (!isPaused)
 		{
 			timeSurvived += deltaTime;
+
+			// Handle periodic, escalating zombie spawning
+			zombieTimer += deltaTime;
+			if (zombieTimer >= zombieSpawnInterval)
+			{
+				zombieTimer = 0.0f;
+				// Escalate: decrease interval slightly every spawn (min 4 seconds)
+				if (zombieSpawnInterval > 4.0f)
+				{
+					zombieSpawnInterval -= 0.5f;
+				}
+
+				// Spawn a random zombie: SimpleZombie or FlyingZombie
+				string zombieType = (rand() % 2 == 0) ? "SimpleZombie" : "FlyingZombie";
+				lawn.addZombie(1100, rand() % 5 * 100 + 20, zombieType);
+			}
 
 			lawn.updateMovingObjects(deltaTime);
 			lawn.updatePlants(deltaTime, &(lawn.movingObjectsArray));
@@ -67,7 +85,8 @@ void garden::input(RenderWindow& window)
 void garden::zombieSpawn() {
 	for (int i = 0; i < 10; i++)
 	{
-		lawn.addZombie(1000 + i * 300, rand() % 5 * 100 + 20, "SimpleZombie");
+		string zombieType = (rand() % 2 == 0) ? "SimpleZombie" : "FlyingZombie";
+		lawn.addZombie(1000 + i * 300, rand() % 5 * 100 + 20, zombieType);
 	}
 }
 

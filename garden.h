@@ -11,6 +11,9 @@ public:
 	void zombieSpawn() override;
 	void input(RenderWindow& windowzz);
 	void loadLawnMowers() override;
+private:
+	float zombieTimer = 0.0f;
+	float zombieSpawnInterval = 10.0f; // Spawn a new zombie every 10 seconds!
 };
 
 #endif 

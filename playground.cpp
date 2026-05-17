@@ -87,6 +87,7 @@ void playground::addPlant(float x, float y, string type )   ///////////Might nee
 	Plant* plant = 	m_plantGen->createPlant(type);
 	if(plant != nullptr)
 	{
+		plant->setName(type);
 		plant->setPosition(x, y);
 		plantsArray.push_back(plant);
 	}
@@ -171,7 +172,34 @@ void playground::updatePlants (float time, MovingObjectArr* movingObjectsArray)
 	for (int i = 0; i < plantsArray.getSize(); i++)
 	{
 		if(plantsArray.at(i) != nullptr)
-		plantsArray.at(i)->action(time, movingObjectsArray);
+		{
+			bool shouldAction = true;
+			string name = plantsArray.at(i)->getName();
+			if (name == "PeaShooter" || name == "FrozenPeaShooter" || name == "Repeater")
+			{
+				shouldAction = false;
+				float plantY = plantsArray.at(i)->getPosition().y;
+				for (int j = 0; j < zombieArray.getSize(); j++)
+				{
+					if (zombieArray.at(j) != nullptr)
+					{
+						float zombieY = zombieArray.at(j)->getPosition().y;
+						float zombieX = zombieArray.at(j)->getPosition().x;
+						// A zombie is in the same lane if Y is within 50px and X is to the right
+						if (abs(zombieY - plantY) < 50 && zombieX >= plantsArray.at(i)->getPosition().x)
+						{
+							shouldAction = true;
+							break;
+						}
+					}
+				}
+			}
+			
+			if (shouldAction)
+			{
+				plantsArray.at(i)->action(time, movingObjectsArray);
+			}
+		}
 	}
 }
 

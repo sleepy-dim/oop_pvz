@@ -9,11 +9,11 @@ Shop::Shop(int level)
 	sun = 1000;
 	listOfCards[0] = new Card("SunFlower", 50, 5, Point(25, 25), true);
 	listOfCards[1] = new Card("PeaShooter", 100, 5, Point(25, 105), true);
-	listOfCards[2] = new Card("WallNut", 50, 5, Point(25, 185), level > 1); // level > 1 
-	listOfCards[3] = new Card("CherryBomb", 150, 5, Point(25, 265), level > 1); //  level > 1
-	listOfCards[4] = new Card("Cactus", 100, 5, Point(25, 345), level > 1);
-	listOfCards[5] = new Card("Repeater", 200, 5, Point(25, 425), level > 2); // level > 1
-	listOfCards[6] = new Card("FrozenPeaShooter", 175, 5, Point(25, 505), level > 2); // level > 2
+	listOfCards[2] = new Card("WallNut", 50, 5, Point(25, 185), true); // level > 1 
+	listOfCards[3] = new Card("CherryBomb", 150, 5, Point(25, 265), true); //  level > 1
+	listOfCards[4] = new Card("Cactus", 100, 5, Point(25, 345), true);
+	listOfCards[5] = new Card("Repeater", 200, 5, Point(25, 425), true); // level > 1
+	listOfCards[6] = new Card("FrozenPeaShooter", 175, 5, Point(25, 505), true); // level > 2
 	listOfCards[7] = new Card("Shovel", 0, 0, Point(90 , 115), true);
 	listOfCards[8] = new Card("Water", 50, 5, Point(90 , 190), true);
 	selectedPlant = nullptr;
@@ -146,23 +146,23 @@ void Shop::selectPlant(float x , float y  ) {
 		{
 			selectedPlant = listOfCards[1];
 		}
-		else if (y >= 185 && y <= 185 + 80 && level > 1 )
+		else if (y >= 185 && y <= 185 + 80)
 		{
 			selectedPlant = listOfCards[2];
 		}
-		else if (y >= 265 && y <= 265 + 80 && level > 1)
+		else if (y >= 265 && y <= 265 + 80)
 		{
 			selectedPlant = listOfCards[3];
 		}
-		else if (y >= 345 && y <= 345 + 80 && level > 1)
+		else if (y >= 345 && y <= 345 + 80)
 		{
 			selectedPlant = listOfCards[4];
 		}
-		else if (y >= 425 && y <= 425 + 80 && level > 2)
+		else if (y >= 425 && y <= 425 + 80)
 		{
 			selectedPlant = listOfCards[5];
 		}	
-		else if (y >= 505 && y <= 505 + 80 && level > 2)
+		else if (y >= 505 && y <= 505 + 80)
 		{
 			selectedPlant = listOfCards[6];
 		}
