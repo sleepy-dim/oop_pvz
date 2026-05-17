@@ -324,9 +324,9 @@ class playground {
   -isLost: bool
   +movingObjectsArray: MovingObjectArr
   +zombieArray: ZombieArr
-  +zombieGen: zombieGen*
+  +m_zombieGen: zombieGen*
   +plantsArray: PlantArr
-  +plantGen: plantGen*
+  +m_plantGen: plantGen*
   +playground(i: int)
   +~playground()
   +getboxHeight(): int
@@ -389,6 +389,21 @@ class SimpleZombie {
   +action(f: float): void
   +animate(s: string): void
   +draw(window: RenderWindow): void
+}
+ 
+class DancingZombie {
+  -countSpecialAbility: int
+  -specialAbilityTimer: float
+  -totalSpecialAbilityTime: int
+  -lawn: playground*
+  +DancingZombie()
+  +~DancingZombie()
+  +getLawnRef(lawn: playground*): void
+  +action(deltaTime: float): void
+  +move(): void
+  +draw(window: RenderWindow): void
+  +animate(s: string): void
+  +specialAction(): bool
 }
  
 class Sun {
@@ -478,6 +493,7 @@ ammo <|-- frozenPeaBullet : Inheritance
 ammo <|-- Pea : Inheritance
 Zombie <|-- flyingZom : Inheritance
 Zombie <|-- SimpleZombie : Inheritance
+Zombie <|-- DancingZombie : Inheritance
 Level <|-- garden : Inheritance
  
 %% Compositions
@@ -501,6 +517,7 @@ Shop "1" o-- "0..9" Card : listOfCards
 %% Associations
 playground "1" --> "1" plantGen : uses
 playground "1" --> "1" zombieGen : uses
+DancingZombie "1" --> "1" playground : lawn
  
 %% Friend
 object .. playground : friend
