@@ -320,7 +320,7 @@ void playground::collisionAmmo_Zombie()
 					{
 						if (movingObjectsArray.at(i)->getName() == "Pea")
 							zombieArray.at(j)->setHealth(zombieArray.at(j)->getHealth() - ((ammo*)movingObjectsArray.at(i))->getDamage());
-						else if (movingObjectsArray.at(i)->getName() == "FrozenPea")
+						else if (movingObjectsArray.at(i)->getName() == "FrozenPea" || movingObjectsArray.at(i)->getName() == "frozenPea")
 						{
 							zombieArray.at(j)->setHealth(zombieArray.at(j)->getHealth() - ((ammo*)movingObjectsArray.at(i))->getDamage());
 							zombieArray.at(j)->setIsFrozen(true);

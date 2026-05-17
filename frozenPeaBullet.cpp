@@ -4,7 +4,7 @@
 frozenPeaBullet::frozenPeaBullet()
 {
 
-	name = "frozenPea";
+	name = "FrozenPea";
 	this->count++;
 	this->isAlive = true;
 	this->position = { 0, 0 };

@@ -28,20 +28,18 @@ void SimpleZombie:: action(float x) {
 	
 	//MOVE
 
-	if (isFrozen)
+	if (state == "Moving")
 	{
-
-		this->position.x += dx / 3.0;
-		this->position.y += dy / 3.0 ;
-	}
-	else
-	{
-		if (state == "Moving")
+		if (isFrozen)
+		{
+			this->position.x += dx / 3.0;
+			this->position.y += dy / 3.0 ;
+		}
+		else
 		{
 			this->position.x += dx;
 			this->position.y += dy;
 		}
-
 	}
 
 

@@ -5,7 +5,7 @@ DancingZombie::DancingZombie() {
 	name = "DancingZombie";
 	state = "Moving";
 	dx = -1.2;
-	dy = -1.2;
+	dy = 0;
 	setHealth(4);
 	setDamage(3);
 	if (!texture.loadFromFile("Assets\\Zombies\\dancer zombie\\dancer (1).png"))
@@ -52,25 +52,16 @@ void DancingZombie::action(float x)
 }
 
 void DancingZombie::move() {
-	if (isFrozen)
+	if (state == "Moving")
 	{
-		this->position.x += dx / 2.0;
-		this->position.y += dy / 2.0;
-	}
-	else
-	{
-		if (state == "Moving")
+		if (isFrozen)
+		{
+			this->position.x += dx / 2.0;
+		}
+		else
 		{
 			this->position.x += dx;
-			this->position.y += dy;
 		}
-	}
-	
-	if (position.y < 0) {
-		dy = 1.2;
-	}
-	if (position.y > 450) {
-		dy = -1.2;
 	}
 }
 
@@ -81,23 +72,23 @@ void DancingZombie::draw(sf::RenderWindow& window) {
 bool DancingZombie::specialAction() {
 	if (lawn == nullptr) return false;
 
-	bool isPlant = false;
-	if (position.x < 720)
+	if (position.x < 850)
 	{
-		for (int i = 0; i < lawn->getPlantsArray().getSize(); i++)
-		{
-			if (lawn->getPlantsArray().at(i) != nullptr)
-			{
-				Point plantPos = lawn->getPlantsArray().at(i)->getPosition();
-				if (abs(plantPos.y - position.y) < 50)
-				{
-					isPlant = true;
-					return false; // Don't spawn backup dancers if blocked by a plant
-				}
-			}
-		}
-		std::cout << "Dancing zombie spawning backup dancer at: " << position.x << ", " << position.y << std::endl;
+		std::cout << "Dancing zombie spawning backup dancers crew!" << std::endl;
+		
+		// Spawn the 4 backup dancers around the Disco Zombie!
+		// 1. Front
 		lawn->addZombie(position.x - 100, position.y, "SimpleZombie");
+		// 2. Back
+		lawn->addZombie(position.x + 100, position.y, "SimpleZombie");
+		// 3. Above (if there's a valid lane above)
+		if (position.y >= 100) {
+			lawn->addZombie(position.x, position.y - 100, "SimpleZombie");
+		}
+		// 4. Below (if there's a valid lane below)
+		if (position.y <= 350) {
+			lawn->addZombie(position.x, position.y + 100, "SimpleZombie");
+		}
 		return true;
 	}
 	return false;
