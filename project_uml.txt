@@ -10,8 +10,8 @@ class Point {
   +operator-(other: Point): Point
   +operator==(other: Point): bool
   +operator+=(other: Point): Point
-  +distance(p1: Point, p2: Point): float  &#171;friend&#187;
-  +operator<<(os: ostream, p: Point): ostream  &#171;friend&#187;
+  +distance(p1: Point, p2: Point): float [friend]
+  +operator_leftshift(os: ostream, p: Point): ostream [friend]
 }
  
 class object {
