@@ -38,4 +38,12 @@ targets
 .DS_Store
 Thumbs.db
 build_output.txt
+<<<<<<< HEAD
 config.properties
+=======
+
+# SFML, Assets, and DLL files
+SFML/
+Assets/
+*.dll
+>>>>>>> 1a8ee2bb276f51445ef2ffb23507cb13a517b241
