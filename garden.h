@@ -14,6 +14,7 @@ public:
 private:
 	float zombieTimer = 0.0f;
 	float zombieSpawnInterval = 10.0f; // Spawn a new zombie every 10 seconds!
+	float aiTimer = 0.0f;
 };
 
 #endif 

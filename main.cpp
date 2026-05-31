@@ -3,18 +3,24 @@
 #include "garden.h"
 #include <iostream>
 
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h> // For MessageBox confirmation
+
 using namespace sf;
 using namespace std;
 
 int main(int argc, char** argv)
 {
     bool loadSave = false;
+    int startLevel = 1;
     for (int i = 1; i < argc; ++i) {
         if (string(argv[i]) == "--load") {
             loadSave = true;
+        } else if (string(argv[i]) == "--level" && i + 1 < argc) {
+            startLevel = atoi(argv[++i]);
         }
     }
-    cout << "Starting main..." << endl;
+    cout << "Starting main... Level: " << startLevel << endl;
     // Create the main game window
     RenderWindow window(VideoMode(1200, 600), "Plants vs Zombies", Style::Close);
     window.setFramerateLimit(60);
@@ -34,13 +40,13 @@ int main(int argc, char** argv)
         cout << "Background music playing successfully." << endl;
     }
 
-    // Initialize the first level
-    cout << "Initializing level 1..." << endl;
-    garden* currentLevel = new garden(1);
+    // Initialize the level
+    cout << "Initializing level " << startLevel << "..." << endl;
+    garden* currentLevel = new garden(startLevel);
     if (loadSave) {
-        currentLevel->loadProgress();
+        currentLevel->loadProgress(); 
     }
-    cout << "Level 1 initialized." << endl;
+    cout << "Level " << startLevel << " initialized." << endl;
 
     // Clock for delta time
     Clock gameClock;
@@ -49,11 +55,39 @@ int main(int argc, char** argv)
     // Main game loop
     while (window.isOpen() && isGameRunning)
     {
+        // Event processing
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+            {
+                // Pause the game and ask for confirmation
+                bool wasPaused = currentLevel->getIsPaused();
+                currentLevel->setIsPaused(true);
+                
+                int result = MessageBoxA(window.getSystemHandle(), 
+                    "Do you really want to quit the game?", 
+                    "Quit Confirmation", 
+                    MB_YESNO | MB_ICONQUESTION | MB_DEFBUTTON2 | MB_TASKMODAL);
+                
+                if (result == IDYES) {
+                    window.close();
+                    isGameRunning = false;
+                } else {
+                    currentLevel->setIsPaused(wasPaused);
+                }
+            }
+            else
+            {
+                // Pass all other events to the current level
+                currentLevel->handleEvent(event, window);
+            }
+        }
+
+        if (!window.isOpen()) break;
+
         // Calculate delta time
         float deltaTime = gameClock.restart().asSeconds();
-
-        // Handle input
-        currentLevel->takeInput(window);
 
         // Update game state
         currentLevel->update(deltaTime);
@@ -72,10 +106,13 @@ int main(int argc, char** argv)
 
     // Cleanup
     if (currentLevel->getIsEnd()) {
-        cout << "GAME_OVER:" << currentLevel->getScore() << endl;
+        int finalScore = currentLevel->getScore();
+        cout << "GAME_OVER:" << finalScore << endl;
+        cout.flush();  // Force flush output
+        cerr << "DEBUG: Game ended with score " << finalScore << endl;
     }
     delete currentLevel;
-    window.close();
+    if (window.isOpen()) window.close();
 
     return 0;
 }

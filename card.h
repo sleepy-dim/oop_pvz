@@ -24,9 +24,13 @@ public:
 	Card(string name, int cost, int coolDown, coordinate P, bool isUnlocked = true);
 	void draw(RenderWindow& window, string slected);
 
+	// Return true if the given window coordinates fall inside this card's sprite
+	bool contains(float x, float y);
+
 	int getCost();
 	int getCoolDown();
 	string getName();
+	bool getIsUnlocked();
 };
 
 #endif 

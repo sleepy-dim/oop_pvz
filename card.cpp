@@ -34,12 +34,14 @@ Card::Card(string name, int cost, int coolDown, coordinate P, bool isUnlocked)
 		position.x += 10;
 		position.y += 4;
 	}
+    // Ensure sprite position is set so global bounds are correct
+    sprite.setPosition(position.x, position.y);
 }
 
 
 void Card::draw(RenderWindow& window, string slcted)
 {
-	if (name == slcted)
+	if (name == slcted && isUnlocked)
 	{
 		RectangleShape rectangle(Vector2f(64, 72));
 		rectangle.setFillColor(Color::Transparent);
@@ -53,13 +55,38 @@ void Card::draw(RenderWindow& window, string slcted)
 	text.setFont(*font);
 	text.setString(to_string(cost));
 	text.setCharacterSize(16);
-	text.setFillColor(Color::Black);
-	text.setPosition(position.x + 20, position.y + 52);
+	
+	if (isUnlocked)
+	{
+		text.setFillColor(Color::Black);
+		sprite.setColor(Color(255, 255, 255));
+	}
+	else
+	{
+		text.setFillColor(Color(50, 50, 50)); // Dimmed text
+		sprite.setColor(Color(80, 80, 80));   // Darker dimmed sprite
+	}
 
-	sprite.setColor(Color(255, 255, 255));
 	sprite.setPosition(position.x, position.y);
 	window.draw(sprite);
 	window.draw(text);
+
+	if (!isUnlocked)
+	{
+		// Draw semi-transparent black overlay for locked cards
+		RectangleShape overlay(Vector2f(64, 72));
+		overlay.setFillColor(Color(0, 0, 0, 180)); // More opaque black
+		overlay.setPosition(position.x, position.y);
+		window.draw(overlay);
+	}
+}
+
+bool Card::contains(float x, float y)
+{
+    // Ensure sprite position is consistent
+    sprite.setPosition(position.x, position.y);
+    FloatRect bounds = sprite.getGlobalBounds();
+    return bounds.contains(x, y);
 }
 
 int Card::getCost()
@@ -75,4 +102,9 @@ int Card::getCoolDown()
 string Card::getName()
 {
 	return name;
+}
+
+bool Card::getIsUnlocked()
+{
+	return isUnlocked;
 }

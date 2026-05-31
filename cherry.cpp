@@ -20,7 +20,7 @@ cherry::cherry(): time_to_explode(2), radius(100)
 		for (int i = 0; i < 7; i++)
 		{
 			animationTextures[i] = new sf::Texture();
-			string path = "Assets/Plants/cherry/cherry_" + to_string(i) + ".png";
+			string path = "Assets/Plants/CherryBomb/CherryBomb_" + to_string(i) + ".png";
 			if (!animationTextures[i]->loadFromFile(path))
 			{
 				cout << "Error loading texture: " << path << endl;

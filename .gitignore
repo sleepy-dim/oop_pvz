@@ -39,7 +39,3 @@ targets
 Thumbs.db
 build_output.txt
 
-# SFML, Assets, and DLL files
-SFML/
-Assets/
-*.dll

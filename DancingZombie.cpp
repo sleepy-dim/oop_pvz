@@ -1,10 +1,11 @@
 #include "DancingZombie.h"
 #include "playground.h"
 
-DancingZombie::DancingZombie() {//dancong 
+DancingZombie::DancingZombie() {
 	name = "DancingZombie";
 	state = "Moving";
-	dx = -1.2;
+	// Increase speed as requested
+	dx = -0.6;
 	dy = 0;
 	setHealth(4);
 	setDamage(3);

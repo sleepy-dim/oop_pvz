@@ -143,100 +143,110 @@ void Level::addSuntoShop()
 void Level::takeInput(RenderWindow& window)
 {
     Event event;
-
     while (window.pollEvent(event))
     {
-        if (event.type == Event::Closed)
-        {
-            window.close();
-        }
+        handleEvent(event, window);
+    }
+}
 
-        // --- MOUSE INPUT ---
-        if (event.type == Event::MouseButtonPressed)
-        {
-            Vector2i mousePos = Mouse::getPosition(window);
-            coordinate gridPos = lawn.getGridPosition(mousePos.x, mousePos.y);
+void Level::handleEvent(Event& event, RenderWindow& window)
+{
+    if (event.type == Event::Closed)
+    {
+        window.close();
+    }
 
-            if (event.mouseButton.button == Mouse::Left)
+    // --- MOUSE INPUT ---
+    if (event.type == Event::MouseButtonPressed)
+    {
+        int mouseX = event.mouseButton.x;
+        int mouseY = event.mouseButton.y;
+        coordinate gridPos = lawn.getGridPosition(mouseX, mouseY);
+
+        if (event.mouseButton.button == Mouse::Left)
+        {
+            cout << "[DEBUG] Mouse Left Press at: " << mouseX << ", " << mouseY << endl;
+            cout << "[DEBUG] GridPos: " << gridPos.x << ", " << gridPos.y << endl;
+            cout << "[DEBUG] Shop selected before click: " << shop.getSelectedPlant() << " sun=" << shop.getSun() << endl;
+            if (!isPaused)
             {
-                if (!isPaused)
+                bool isWithinGrid = (gridPos.x >= 0 && gridPos.x < 9 && gridPos.y >= 0 && gridPos.y < 5);
+
+                if (isWithinGrid && shop.isPurchasable())
                 {
-                    bool isWithinGrid = (gridPos.x >= 0 && gridPos.x < 9 && gridPos.y >= 0 && gridPos.y < 5);
+                    string selectedItem = shop.getSelectedPlant();
 
-                    if (isWithinGrid && shop.isPurchasable())
+                    cout << "[DEBUG] Attempting to plant: " << selectedItem << " at " << gridPos.x << "," << gridPos.y << "\n";
+
+                    // Handle Tools (Shovel / Water)
+                    if (selectedItem == "Shovel")
                     {
-                        string selectedItem = shop.getSelectedPlant();
-
-                        // Handle Tools (Shovel / Water)
-                        if (selectedItem == "Shovel")
+                        if (lawn.removePlant(gridPos.x, gridPos.y))
                         {
-                            if (lawn.removePlant(gridPos.x, gridPos.y))
-                            {
-                                shop.purchase();
-                                shop.selectPlant("none");
-                            }
-                            lawn.setBoxAvailable(gridPos.x, gridPos.y, true);
+                            shop.purchase();
+                            shop.selectPlant("none");
                         }
-                        else if (selectedItem == "Water")
+                        lawn.setBoxAvailable(gridPos.x, gridPos.y, true);
+                    }
+                    else if (selectedItem == "Water")
+                    {
+                        if (lawn.waterPlant(gridPos.x, gridPos.y))
                         {
-                            if (lawn.waterPlant(gridPos.x, gridPos.y))
-                            {
-                                shop.purchase();
-                                shop.selectPlant("none");
-                            }
-                        }
-                        // Handle Planting
-                        else if (lawn.isBoxAvailable(gridPos.x, gridPos.y))
-                        {
-                            float spawnX = lawn.getGRID_START_X() + (gridPos.x * lawn.getboxWidth());
-                            float spawnY = lawn.getGRID_START_Y() + (gridPos.y * lawn.getboxHeight());
-                            
-                            lawn.addPlant(spawnX, spawnY, selectedItem);
-                            lawn.setBoxAvailable(gridPos.x, gridPos.y, false);
-                            
                             shop.purchase();
                             shop.selectPlant("none");
                         }
                     }
-
-                    // Update selections based on clicks
-                    shop.selectPlant(mousePos.x, mousePos.y);
-                    lawn.selectSun(mousePos.x, mousePos.y);
+                    // Handle Planting
+                    else if (lawn.isBoxAvailable(gridPos.x, gridPos.y))
+                    {
+                        float spawnX = lawn.getGRID_START_X() + (gridPos.x * lawn.getboxWidth());
+                        float spawnY = lawn.getGRID_START_Y() + (gridPos.y * lawn.getboxHeight());
+                        
+                        lawn.addPlant(spawnX, spawnY, selectedItem);
+                        lawn.setBoxAvailable(gridPos.x, gridPos.y, false);
+                        
+                        shop.purchase();
+                        shop.selectPlant("none");
+                    }
                 }
 
-                // Check Pause Button Click
-                if (mousePos.x >= 1035 && mousePos.x <= 1085 && mousePos.y >= 25 && mousePos.y <= 75)
-                {
-                    isPaused = true;
-                }
-                
-                // Check Resume Button Click (Inside Pause Menu)
-                if (isPaused && mousePos.x >= 400 && mousePos.x <= 680 && mousePos.y >= 435 && mousePos.y <= 475)
-                {
-                    isPaused = false;
-                }
+                // Update selections based on clicks
+                shop.selectPlant(mouseX, mouseY);
+                lawn.selectSun(mouseX, mouseY);
             }
-            else if (event.mouseButton.button == Mouse::Right)
+
+            // Check Pause Button Click
+            if (mouseX >= 1035 && mouseX <= 1085 && mouseY >= 25 && mouseY <= 75)
             {
-                cout << "PIXEL : " << mousePos.x << " " << mousePos.y << endl;
-                cout << "GRID : " << gridPos.x << " " << gridPos.y << endl;
+                isPaused = true;
+            }
+            
+            // Check Resume Button Click (Inside Pause Menu)
+            if (isPaused && mouseX >= 400 && mouseX <= 680 && mouseY >= 435 && mouseY <= 475)
+            {
+                isPaused = false;
             }
         }
-
-        // --- KEYBOARD INPUT ---
-        if (event.type == Event::KeyPressed)
+        else if (event.mouseButton.button == Mouse::Right)
         {
-            if (event.key.code == Keyboard::Enter)
+            cout << "PIXEL : " << mouseX << " " << mouseY << endl;
+            cout << "GRID : " << gridPos.x << " " << gridPos.y << endl;
+        }
+    }
+
+    // --- KEYBOARD INPUT ---
+    if (event.type == Event::KeyPressed)
+    {
+        if (event.key.code == Keyboard::Enter)
+        {
+            if (hasLost || hasWon)
             {
-                if (hasLost || hasWon)
-                {
-                    isEnd = true;
-                }
+                isEnd = true;
             }
-            else if (event.key.code == Keyboard::S)
-            {
-                saveProgress();
-            }
+        }
+        else if (event.key.code == Keyboard::S)
+        {
+            saveProgress();
         }
     }
 }
@@ -261,7 +271,20 @@ void Level::checkLoose()
 
 void Level::checkWin()
 {
-    // Endless mode - no win condition, runs until death
+    int requiredKills = 0;
+    if (levelNumber == 1) requiredKills = 10;
+    else if (levelNumber == 2) requiredKills = 15;
+    else if (levelNumber == 3) requiredKills = 18;
+
+    if (requiredKills > 0 && Zombie::killCount >= requiredKills)
+    {
+        if (!hasWon) {
+            hasWon = true;
+            isPaused = true;
+            cout << "GAME_OVER: " << getScore() << endl;
+            cout.flush();
+        }
+    }
 }
 
 void Level::generateSun(float deltaTime)
@@ -335,4 +358,14 @@ void Level::loadProgress()
 int Level::getScore()
 {
     return (int)timeSurvived + Zombie::killCount;
+}
+
+bool Level::getIsPaused()
+{
+    return isPaused;
+}
+
+void Level::setIsPaused(bool p)
+{
+    isPaused = p;
 }

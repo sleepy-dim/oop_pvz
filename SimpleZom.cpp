@@ -3,7 +3,8 @@ SimpleZombie::SimpleZombie() {
 	
 	totalIntervals = 12 ;
 	timer = 0;
-	dx = -1 ;
+	// Increase speed as requested
+	dx = -0.5 ;
 	dy = 0;
 
 	setHealth(4);

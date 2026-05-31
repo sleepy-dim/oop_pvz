@@ -1,10 +1,10 @@
 #pragma once
-#include "Plant.h"
-class Cactus : public Plant
+#include "ShootingPlant.h"
+class Cactus : public ShootingPlant
 {
 public:
 	Cactus();
-	void action(float deltaTime, MovingObjectArr*) override;
+	void shoot(float deltaTime, MovingObjectArr*) override;
 	void draw(RenderWindow&) override;
 	void setPosition(float x, float y)override;
 	~Cactus();

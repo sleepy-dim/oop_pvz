@@ -15,6 +15,9 @@ class Shop
 	int sun;
 	int level;
 	
+    Texture sunBankTexture;
+    Texture shovelBankTexture;
+    Font font;
 
 public:
 	Shop(int level);

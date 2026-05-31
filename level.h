@@ -54,6 +54,7 @@ public:
 	virtual void draw(RenderWindow& window) = 0;
 	virtual void update(float) = 0;
 	virtual void takeInput(RenderWindow& window) ;
+    virtual void handleEvent(Event& event, RenderWindow& window);
 	virtual void zombieSpawn() = 0;
 	void addSuntoShop(); 
 	void generateSun(float);
@@ -63,6 +64,8 @@ public:
 	bool getIsEnd();	
 	bool getIsWon();
 	bool getIsLost();
+	bool getIsPaused();
+	void setIsPaused(bool);
 
 	float timeSurvived = 0;
 	void saveProgress();

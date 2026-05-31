@@ -95,6 +95,7 @@ void playground::addPlant(float x, float y, string type )   ///////////Might nee
 		plant->setName(type);
 		plant->setPosition(x, y);
 		plantsArray.push_back(plant);
+		cout << "[DEBUG] Added plant: " << type << " at (" << x << ", " << y << ")\n";
 	}
 }
 
@@ -184,14 +185,18 @@ void playground::updatePlants (float time, MovingObjectArr* movingObjectsArray)
 			{
 				shouldAction = false;
 				float plantY = plantsArray.at(i)->getPosition().y;
+				float plantX = plantsArray.at(i)->getPosition().x;
+				
 				for (int j = 0; j < zombieArray.getSize(); j++)
 				{
 					if (zombieArray.at(j) != nullptr)
 					{
 						float zombieY = zombieArray.at(j)->getPosition().y;
 						float zombieX = zombieArray.at(j)->getPosition().x;
-						// A zombie is in the same lane if Y is within 50px and X is to the right
-						if (abs(zombieY - plantY) < 50 && zombieX >= plantsArray.at(i)->getPosition().x)
+						
+						// More robust lane detection using a slightly larger window (75px)
+						// and checking if the zombie is to the right of the plant.
+						if (abs(zombieY - plantY) < 75 && zombieX >= plantX - 50)
 						{
 							shouldAction = true;
 							break;
@@ -306,17 +311,29 @@ void playground::collisionAmmo_Zombie()
 		{
 			if (movingObjectsArray.at(i) != nullptr && zombieArray.at(j) != nullptr)
 			{
-				if (zombieArray.at(j)->getName() == "FlyingZombie")
-				{
-					continue;
-				}
-
 				coordinate M = movingObjectsArray.at(i)->getPosition();
 				coordinate Z = zombieArray.at(j)->getPosition();
 
+				bool isFlying = (zombieArray.at(j)->getName() == "FlyingZombie");
+
 				if (movingObjectsArray.at(i)->getType() == "ammo")
 				{
-					if (M.x >= Z.x + 50 && M.x <= Z.x + 150 && M.y >= Z.y && M.y <= Z.y + 110)
+					bool hit = false;
+					if (isFlying)
+					{
+						// Flying zombies are higher, so we check a much higher and broader collision box
+						// Balloon zombies fly high, so we check from Z.y - 100 up to Z.y + 100
+						if (M.x >= Z.x + 30 && M.x <= Z.x + 170 && M.y >= Z.y - 100 && M.y <= Z.y + 120)
+						{
+							hit = true;
+						}
+					}
+					else if (M.x >= Z.x + 50 && M.x <= Z.x + 150 && M.y >= Z.y && M.y <= Z.y + 110)
+					{
+						hit = true;
+					}
+
+					if (hit)
 					{
 						if (movingObjectsArray.at(i)->getName() == "Pea")
 							zombieArray.at(j)->setHealth(zombieArray.at(j)->getHealth() - ((ammo*)movingObjectsArray.at(i))->getDamage());
@@ -327,6 +344,7 @@ void playground::collisionAmmo_Zombie()
 						}
 						movingObjectsArray.erase(i);
 						i--;
+						break; // Break inner loop as ammo is destroyed
 					}
 				}
 				else if (movingObjectsArray.at(i)->getType() == "LawnMower")

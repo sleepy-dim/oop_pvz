@@ -2,7 +2,8 @@
 
 flyingZom::flyingZom() {
 	name = "FlyingZombie";
-	dx = -1;
+	// Reduce speed to slow down flying zombies
+	dx = -0.1;
 	dy = 0;
 	setHealth(4);
 	setDamage(2);
