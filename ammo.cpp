@@ -1,7 +1,8 @@
 #include "ammo.h"
 
-ammo::ammo()
+ammo::ammo()//nothing
 {
+	
 	type = "ammo";
 	damage = 0;
 

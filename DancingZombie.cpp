@@ -1,7 +1,7 @@
 #include "DancingZombie.h"
 #include "playground.h"
 
-DancingZombie::DancingZombie() {
+DancingZombie::DancingZombie() {//dancong 
 	name = "DancingZombie";
 	state = "Moving";
 	dx = -1.2;
