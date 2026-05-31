@@ -38,4 +38,4 @@ targets
 .DS_Store
 Thumbs.db
 build_output.txt
-
+config.properties
