@@ -7,7 +7,7 @@ using namespace sf;
 PeaShooter::PeaShooter() 
 {
 	cost = 100;
-	health = 500;
+	health = 300;
 	damage = 10;
 
 	bulletInterval = 1.5f;

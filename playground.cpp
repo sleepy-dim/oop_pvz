@@ -392,6 +392,13 @@ void playground::collisionPlant_Zombie()
 					}
 
 					coordinate P = plantsArray.at(i)->getPosition();
+					coordinate gridPos = getGridPosition(P.x, P.y);
+					if (gridPos.x == 0)
+					{
+						// Zombies bypass plants on the first tile (column 0)
+						continue;
+					}
+
 					coordinate Z = zombieArray.at(j)->getPosition();
 					
 					// Calculate approximate center of the zombie for a more accurate radius check
@@ -406,18 +413,31 @@ void playground::collisionPlant_Zombie()
 							continue;
 						}
 						zombieArray.at(j)->setState("Attacking");
-						plantsArray.at(i)->setHealth(plantsArray.at(i)->getHealth() - zombieArray.at(j)->getDamage());
+						
+						// Implement bite rate: damage is only applied once every 1.0 second!
+						if (zombieArray.at(j)->getAttackTimer() >= 1.0f)
+						{
+							// Scale the bite damage by 15x to balance with the discrete bite rate
+							plantsArray.at(i)->setHealth(plantsArray.at(i)->getHealth() - (zombieArray.at(j)->getDamage() * 15));
+							zombieArray.at(j)->setAttackTimer(0.0f); // Reset bite timer
+						}
 
 						if (plantsArray.at(i)->getHealth() <= 0)
 						{
 							plantsArray.erase(i);
 							i--;
 							zombieArray.at(j)->setState("Moving");
+							zombieArray.at(j)->setAttackTimer(1.0f); // Ready to bite next target immediately!
 						}
 					}
 					else
 					{
 						zombieArray.at(j)->setState("Moving");
+						// Cap attack timer to 1.0f so it is ready to bite immediately on next collision
+						if (zombieArray.at(j)->getAttackTimer() > 1.0f)
+						{
+							zombieArray.at(j)->setAttackTimer(1.0f);
+						}
 					}
 
 					

@@ -4,6 +4,8 @@
 #include "Zombie.h"
 #include <iostream>
 #include <fstream>
+#include <mutex>
+#include <string>
 
 using namespace sf;
 using namespace std;
@@ -53,6 +55,76 @@ void Level::drawPause(RenderWindow& window)
 {
     window.draw(pauseSprite);
     window.draw(livesSprite);
+
+    // Draw Crazy Dave AI Advice Box on the Top Right of the Screen!
+    if (!isPaused && !hasLost && !hasWon)
+    {
+        extern std::string g_aiAdvice;
+        extern std::mutex g_adviceMutex;
+
+        std::string adviceText;
+        {
+            std::lock_guard<std::mutex> lock(g_adviceMutex);
+            adviceText = g_aiAdvice;
+        }
+
+        // 1. Draw Background Wood Card
+        RectangleShape bgBox(Vector2f(380.f, 130.f));
+        bgBox.setPosition(800.f, 15.f);
+        bgBox.setFillColor(Color(35, 25, 20, 220)); // Wooden brown
+        bgBox.setOutlineThickness(3.f);
+        bgBox.setOutlineColor(Color(218, 165, 32)); // Golden border
+        window.draw(bgBox);
+
+        // 2. Draw Crazy Dave Portrait
+        Texture daveTex;
+        if (daveTex.loadFromFile("Assets/Images/crazydave.png"))
+        {
+            Sprite daveSprite(daveTex);
+            daveSprite.setPosition(810.f, 25.f);
+            
+            // The user's uploaded image has different dimensions, let's scale it to fit nicely inside the 110x110 box
+            FloatRect bounds = daveSprite.getLocalBounds();
+            float scaleX = 100.f / bounds.width;
+            float scaleY = 110.f / bounds.height;
+            daveSprite.setScale(scaleX, scaleY);
+            
+            window.draw(daveSprite);
+        }
+
+        // 3. Draw Burbank Font Texts
+        Font font;
+        if (font.loadFromFile("Assets/fonts/burbank.otf"))
+        {
+            Text title;
+            title.setFont(font);
+            title.setCharacterSize(16);
+            title.setFillColor(Color(255, 69, 0)); // Orange-Red
+            title.setString("CRAZY DAVE'S ADVICE:");
+            title.setPosition(925.f, 22.f);
+            window.draw(title);
+
+            Text advice;
+            advice.setFont(font);
+            advice.setCharacterSize(14);
+            advice.setFillColor(Color::Yellow);
+
+            // Dynamic word wrapping for the advice text (fits approx 28 characters per line)
+            std::string wrappedText = "";
+            size_t lineLength = 0;
+            for (size_t i = 0; i < adviceText.length(); ++i) {
+                wrappedText += adviceText[i];
+                lineLength++;
+                if (lineLength > 24 && adviceText[i] == ' ') {
+                    wrappedText += "\n";
+                    lineLength = 0;
+                }
+            }
+            advice.setString(wrappedText);
+            advice.setPosition(925.f, 45.f);
+            window.draw(advice);
+        }
+    }
     
     // Draw semi-transparent dark overlay if paused or game ended
     if (isPaused || hasLost || hasWon)
@@ -271,6 +343,12 @@ void Level::checkLoose()
 
 void Level::checkWin()
 {
+    extern bool g_isUnlimited;
+    if (g_isUnlimited)
+    {
+        return; // Infinite survival mode!
+    }
+
     int requiredKills = 0;
     if (levelNumber == 1) requiredKills = 10;
     else if (levelNumber == 2) requiredKills = 15;

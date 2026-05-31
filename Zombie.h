@@ -24,6 +24,7 @@ protected:
 	bool isDying;
 	bool isBurnt;
 	float burntTimer;
+	float attackTimer;
 
 public:
 	static int killCount;
@@ -33,6 +34,8 @@ public:
 
 	float getdx();
 	float getdy();
+	float getAttackTimer();
+	void setAttackTimer(float t);
 	void setSpeed(float dx, float dy);
 
 	void draw(sf::RenderWindow& window);

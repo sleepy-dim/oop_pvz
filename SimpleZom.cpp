@@ -3,11 +3,10 @@ SimpleZombie::SimpleZombie() {
 	
 	totalIntervals = 12 ;
 	timer = 0;
-	// Increase speed as requested
-	dx = -0.5 ;
+	dx = -1.1f;
 	dy = 0;
 
-	setHealth(4);
+	setHealth(10);
 	setDamage(2);
 
 	if (!texture.loadFromFile("Assets\\Zombies\\NormalZombie\\Moving\\Zombie_0.png"))

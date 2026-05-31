@@ -12,7 +12,7 @@ void Wallnut::setPosition(float x, float y)
 
 Wallnut::Wallnut()
 {
-	health = 4000;
+	health = 1590;
 	damage = 0;
 	cost = 50;
 	dx = 5 ;

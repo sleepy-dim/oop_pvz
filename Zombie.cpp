@@ -109,6 +109,7 @@ Zombie::Zombie() : totalFrozenTime(15)  {
 	isDying = false;
 	isBurnt = false;
 	burntTimer = 0;
+	attackTimer = 1.0f;
 }
 
 Zombie::~Zombie()
@@ -123,6 +124,16 @@ float Zombie::getdx()
 float Zombie::getdy()
 {
 	return dy;
+}
+
+float Zombie::getAttackTimer()
+{
+	return attackTimer;
+}
+
+void Zombie::setAttackTimer(float t)
+{
+	this->attackTimer = t;
 }
 
 void Zombie::setSpeed(float dx, float dy)
@@ -181,6 +192,7 @@ void Zombie :: action(float x)
 	if (timer > totalIntervals) {
 		timer = 0;
 	}
+	attackTimer += x;
 	if (isWithoutHead)
 	{
 		headTimer += (x * 15);

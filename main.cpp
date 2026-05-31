@@ -9,8 +9,29 @@
 using namespace sf;
 using namespace std;
 
+#include <thread>
+#include <mutex>
+
+bool g_isUnlimited = false;
+std::string g_aiAdvice = "Waiting for Dave's tactical advice...";
+std::mutex g_adviceMutex;
+
+void readStdinLoop() {
+    std::string line;
+    while (std::getline(std::cin, line)) {
+        if (line.rfind("AI_ADVICE:", 0) == 0) {
+            std::lock_guard<std::mutex> lock(g_adviceMutex);
+            g_aiAdvice = line.substr(10); // Extract advice
+        }
+    }
+}
+
 int main(int argc, char** argv)
 {
+    // Start background thread to read AI advice from Java launcher stdin
+    std::thread stdinThread(readStdinLoop);
+    stdinThread.detach();
+
     bool loadSave = false;
     int startLevel = 1;
     for (int i = 1; i < argc; ++i) {
@@ -18,9 +39,11 @@ int main(int argc, char** argv)
             loadSave = true;
         } else if (string(argv[i]) == "--level" && i + 1 < argc) {
             startLevel = atoi(argv[++i]);
+        } else if (string(argv[i]) == "--unlimited") {
+            g_isUnlimited = true;
         }
     }
-    cout << "Starting main... Level: " << startLevel << endl;
+    cout << "Starting main... Level: " << startLevel << " Unlimited: " << g_isUnlimited << endl;
     // Create the main game window
     RenderWindow window(VideoMode(1200, 600), "Plants vs Zombies", Style::Close);
     window.setFramerateLimit(60);

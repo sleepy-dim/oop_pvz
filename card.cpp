@@ -27,10 +27,15 @@ Card::Card(string name, int cost, int coolDown, coordinate P, bool isUnlocked)
 		cout << "Error loading card texture for: " << name << endl;
 	
 	sprite.setTexture(texture);
-	sprite.setScale(1, 0.8);
-	if (name == "Shovel" || name == "Water")
+	sprite.setScale(1.0f, 0.8f);
+	if (name == "Cactus")
 	{
-		sprite.setScale(0.7, 0.7);
+		// Cactus has a high-res 1024x1024 texture. Force standard 64x72 screen size.
+		sprite.setScale(64.0f / 1024.0f, 72.0f / 1024.0f);
+	}
+	else if (name == "Shovel" || name == "Water")
+	{
+		sprite.setScale(0.7f, 0.7f);
 		position.x += 10;
 		position.y += 4;
 	}

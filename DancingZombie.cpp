@@ -5,9 +5,10 @@ DancingZombie::DancingZombie() {//dancong
 	
 	name = "DancingZombie";
 	state = "Moving";
-	dx = -1.2;
+	// Set balanced speed
+	dx = -0.6;
 	dy = 0;
-	setHealth(4);
+	setHealth(15);
 	setDamage(3);
 	if (!texture.loadFromFile("Assets\\Zombies\\dancer zombie\\dancer (1).png"))
 	{

@@ -6,11 +6,12 @@
 Shop::Shop(int level)
 {
 	this->level = level;
-	sun = (level == 1) ? 200 : 1000;
+	extern bool g_isUnlimited;
+	sun = (level == 1 && !g_isUnlimited) ? 200 : 1000;
 
 	// In Level 1, only Shooter and basic cards are unlocked.
 	// In Level 2 and 3, everything is unlocked.
-	bool level1Unlocks = (level == 1);
+	bool level1Unlocks = (level == 1 && !g_isUnlimited);
 	bool level2Unlocks = (level >= 2);
 	bool level3Unlocks = (level >= 3);
 

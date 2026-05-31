@@ -2,10 +2,10 @@
 
 flyingZom::flyingZom() {
 	name = "FlyingZombie";
-	// Reduce speed to slow down flying zombies
-	dx = -0.1;
+	// Set balanced speed
+	dx = -0.06;
 	dy = 0;
-	setHealth(4);
+	setHealth(10);
 	setDamage(2);
 	if (!texture.loadFromFile("Assets\\Zombies\\Ballon Zombie\\ballon zombie (1).png"))
 	{

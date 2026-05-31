@@ -91,7 +91,7 @@ void garden::update(float deltaTime)
 
 			// AI State Reporting
 			aiTimer += deltaTime;
-			if (aiTimer >= 5.0f) {
+			if (aiTimer >= 10.0f) {
 				cout << "GAME_STATE: Sun=" << shop.getSun() 
 					 << ", ZombieCount=" << lawn.zombieArray.getSize() << endl;
 				cout.flush(); // Ensure output is sent
